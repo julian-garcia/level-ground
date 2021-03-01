@@ -5,25 +5,28 @@
     <div class="content">
       <hr>
       <router-view :stories="stories" />
+      <hr class="square">
     </div>
     <div class="rightbar"></div>
   </div>
+  <Footer />
 </template>
 
 <script>
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import StoryblokClient from 'storyblok-js-client'
-
-const token = process.env.VUE_APP_STORYBLOK_API;
+import '@csstools/normalize.css'
 
 let storyApi = new StoryblokClient({
-  accessToken: token
+  accessToken: process.env.VUE_APP_STORYBLOK_API
 })
 
 export default {
   name: 'App',
   components: {
     Header,
+    Footer
   },
   data () {
     return {
@@ -32,27 +35,32 @@ export default {
   },
   created () {
     window.storyblok.init({
-      accessToken: token
+      accessToken: process.env.VUE_APP_STORYBLOK_API
     })
     window.storyblok.on('change', () => {
-      this.getStory('draft')
+      this.getStories('draft')
     })
     window.storyblok.pingEditor(() => {
       if (window.storyblok.isInEditor()) {
-        this.getStory('draft')
+        this.getStories('draft')
       } else {
-        this.getStory('published')
+        this.getStories('published')
       }
     })
   },
   methods: {
-    getStory(version) {
+    getStories(version) {
       storyApi.get('cdn/stories', {
         starts_with: "articles/",
         version: version
       })
       .then((response) => {
-        this.stories = response.data.stories.filter(story => story.content.feature)
+        this.stories = response.data.stories
+          .filter(story => story.content.feature)
+          .map(story => { 
+            delete story.content.long_text
+            return {...story.content, published_at: story.published_at, slug: story.slug}
+          })
       })
       .catch((error) => {
         console.log(error);
@@ -96,8 +104,27 @@ export default {
   width: 100%;
 }
 
+p { line-height: 1.3; }
 h1, h2, h3 { font-family: Playfair; }
-hr { border: none; height: 1px; background: var(--highlight-colour-muted); }
+hr { 
+  border: none; 
+  height: 1px; 
+  background: var(--highlight-colour-muted); 
+  position: relative;
+  overflow: visible;
+  margin: 1rem 0;
+}
+
+hr.square::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: -30px;
+  height: 50px;
+  width: 50px;
+  transform: rotate(45deg);
+  border: 1px solid var(--highlight-colour);
+}
 
 .button {
   border-radius: 5px;
@@ -109,6 +136,14 @@ hr { border: none; height: 1px; background: var(--highlight-colour-muted); }
   font-size: var(--button-font-size);
   font-family: Asap;
   cursor: pointer;
+}
+
+input {
+  border-radius: 5px;
+  border: 1px solid var(--highlight-colour-muted);
+  padding: .5rem 1rem;
+  font-size: var(--button-font-size);
+  font-family: Asap;
 }
 
 @font-face {

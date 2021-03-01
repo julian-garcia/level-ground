@@ -6,26 +6,33 @@
     </div>
     <div>
       <p>Level Ground is more than just an arts organization. Our goal is to build a community of unlike minds. Our immersive programming, panels, and moderated discussions encourage informal cultural exchanges that spark new friendships.</p>
-      <button class="button">Join</button>
+      <button class="button">Join Our Collective</button>
       <router-link class="mission" to="/404">Our Mission</router-link>
     </div>
   </div>
   <div class="cards__feature">
-    <div v-for="item in stories" class="card__feature" :key="item.uuid">
-      <img :src="item.content.image.filename" alt="">
+    <div v-for="item in stories" class="card__feature" :key="item.uuid" @click="goTo(item.slug)">
+      <img :src="item.image.filename" alt="">
       <p class="featured">Featured Project</p>
-      <h2>{{item.content.title}}</h2>
-      <p>{{item.content.intro}}</p>
+      <h2>{{item.title}}</h2>
+      <p>{{item.intro}}</p>
       <p>{{$filters.formatDate(item.published_at) }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import router from '../router'
+
 export default {
   name: 'HomePage',
   props: {
     stories: Array
+  },
+  methods: {
+    goTo(url) {
+      router.push({path: `/article/${url}`})
+    }
   }
 }
 </script>
@@ -39,6 +46,7 @@ export default {
 
   .card__feature {
     text-align: left;
+    cursor: pointer;
   }
 
   .card__feature img {
@@ -100,7 +108,7 @@ export default {
   }
 
   .reverse {
-    transform: rotate(180deg) translateY(-1px);
+    transform: rotate(180deg);
     display: inline-block;
   }
 </style>

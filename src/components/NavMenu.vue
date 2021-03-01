@@ -1,22 +1,25 @@
 <template>
   <ul class="nav-menu">
-    <li>
+    <li class="nav-menu__item">
       <router-link to="/">About</router-link>
     </li>
-    <li>
-      <router-link to="/404">Collective</router-link>
+    <li class="nav-menu__item">
+      <router-link to="/collective">Collective</router-link>
     </li>
-    <li>
-      <router-link to="/404">Studio</router-link>
+    <li class="nav-menu__item">
+      <router-link to="/studio">Studio</router-link>
     </li>
-    <li>
-      <router-link to="/404">Events</router-link>
+    <li class="nav-menu__item">
+      <router-link to="/events">Events</router-link>
     </li>
-    <li>
-      <router-link to="/404">News & Stories</router-link>
+    <li class="nav-menu__item">
+      <router-link to="/membership">Membership</router-link>
     </li>
-    <li>
-      <router-link to="/404">Store</router-link>
+    <li class="nav-menu__item">
+      <router-link to="/news">News&nbsp;&amp;&nbsp;Stories</router-link>
+    </li>
+    <li class="nav-menu__item">
+      <router-link to="/store">Store</router-link>
     </li>
   </ul>
 </template>
@@ -28,11 +31,21 @@ export default {
 </script>
 
 <style scoped>
-a { text-decoration: none; color: black; display: block; }
+.nav-menu__item a { 
+  text-decoration: none; 
+  color: black; 
+  display: block;
+  padding: 0 1rem;
+}
+
+.nav-menu__item a:hover, a.router-link-active {
+  color: var(--highlight-colour);
+}
 
 .nav-menu {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(0,min-content));
+  justify-content: center;
   list-style-type: none;
   max-width: 800px;
   margin: 1rem auto;

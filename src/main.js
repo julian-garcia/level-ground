@@ -8,7 +8,6 @@ const app = createApp(App)
 
 app.config.globalProperties.$filters = {
   formatDate(dt) {
-    console.log(dt);
     return moment(dt).format('MMMM DD, YYYY')
   }
 }
