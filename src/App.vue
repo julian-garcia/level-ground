@@ -51,7 +51,7 @@ export default {
   methods: {
     getStories(version) {
       storyApi.get('cdn/stories', {
-        starts_with: "articles/",
+        starts_with: "article/",
         version: version
       })
       .then((response) => {
