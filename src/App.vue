@@ -51,16 +51,16 @@ export default {
   methods: {
     getStories(version) {
       storyApi.get('cdn/stories', {
-        starts_with: "article/",
+        // starts_with: "article/",
         version: version
       })
       .then((response) => {
         this.stories = response.data.stories
-          .filter(story => story.content.feature)
           .map(story => { 
             delete story.content.long_text
             return {...story.content, published_at: story.published_at, slug: story.slug}
           })
+        console.log(this.stories);
       })
       .catch((error) => {
         console.log(error);
@@ -79,6 +79,7 @@ export default {
 
 :root {
   background: #fff7f7;
+  --background: #fff7f7;
   --highlight-colour: #e5511b;
   --highlight-colour-muted: #fecfc8;
   --button-font-size: 20px;
@@ -99,9 +100,9 @@ export default {
 
 .content {
   grid-column: content;
-  max-width: 900px;
   margin: auto;
   width: 100%;
+  max-width: 1350px;
 }
 
 p { line-height: 1.3; }
@@ -136,6 +137,11 @@ hr.square::after {
   font-size: var(--button-font-size);
   font-family: Asap;
   cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.button.full-width {
+  width: 100%;
 }
 
 input {
@@ -144,6 +150,14 @@ input {
   padding: .5rem 1rem;
   font-size: var(--button-font-size);
   font-family: Asap;
+}
+
+.left .headline {
+  color: var(--highlight-colour);
+  font-style: italic;
+  font-family: Playfair;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 @font-face {
@@ -156,6 +170,19 @@ input {
   src: url("./assets/fonts/PlayfairDisplay.woff2") format("woff2"),
        url("./assets/fonts/PlayfairDisplay.woff") format("woff");
 }
+@font-face {
+  font-family: "Playfair";
+  font-style: italic;
+  src: url("./assets/fonts/PlayfairDisplay-Italic.woff2") format("woff2"),
+       url("./assets/fonts/PlayfairDisplay-Italic.woff") format("woff");
+}
+@font-face {
+  font-family: "Playfair";
+  font-style: italic;
+  font-weight: bold;
+  src: url("./assets/fonts/PlayfairDisplay-BoldItalic.woff2") format("woff2"),
+       url("./assets/fonts/PlayfairDisplay-BoldItalic.woff") format("woff");
+}
 @media screen and (min-width: 900px) {
   .container {
     grid-template-columns: [leftbar] .5fr [content] 3fr [rightbar] .5fr;
@@ -163,7 +190,7 @@ input {
 }
 @media screen and (min-width: 1200px) {
   .container {
-    grid-template-columns: [leftbar] .7fr [content] 3fr [rightbar] .7fr;
+    grid-template-columns: [leftbar] .2fr [content] 3fr [rightbar] .2fr;
   }
 }
 @media screen and (min-width: 2000px) {

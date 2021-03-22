@@ -1,6 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
 import HomePage from "../components/HomePage.vue";
 import Article from "../components/Article.vue";
+import Event from "../components/Event.vue";
+import Grid from "../components/Grid.vue";
+import Page from "../components/Page.vue";
 import NotFound from "../components/NotFound.vue";
 
 const routes = [
@@ -10,13 +13,27 @@ const routes = [
     component: HomePage,
   },
   {
-  path: "/article/:slug",
+    path: "/article/:slug",
     component: Article,
   },
   {
-  path: "/:catchAll(.*)",
-    component: NotFound,
+    name: "Events",
+    path: "/events",
+    component: Grid,
   },
+  {
+    path: "/event/:slug",
+    component: Event,
+  },
+  {
+    path: "/:slug",
+    component: Page,
+  },
+  {
+    path: "/404",
+    name: "NotFound",
+    component: NotFound,
+  }
 ];
 
 const router = createRouter({

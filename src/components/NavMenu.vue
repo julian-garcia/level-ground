@@ -1,7 +1,7 @@
 <template>
   <ul class="nav-menu">
     <li class="nav-menu__item">
-      <router-link to="/">About</router-link>
+      <router-link to="/about">About</router-link>
     </li>
     <li class="nav-menu__item">
       <router-link to="/collective">Collective</router-link>
@@ -43,7 +43,7 @@ export default {
 }
 
 .nav-menu {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(auto-fit, minmax(0,min-content));
   justify-content: center;
   list-style-type: none;
@@ -52,5 +52,9 @@ export default {
   padding: 0;
   font-weight: bold;
   font-size: 1.2rem;
+}
+
+@media screen and (min-width: 900px) {
+  .nav-menu { display: grid; }
 }
 </style>

@@ -11,6 +11,7 @@
 
 <script>
 import StoryblokClient from 'storyblok-js-client'
+import router from '../router'
 
 let storyApi = new StoryblokClient({
   accessToken: process.env.VUE_APP_STORYBLOK_API
@@ -18,9 +19,6 @@ let storyApi = new StoryblokClient({
 
 export default {
   name: 'Article',
-  props: {
-    stories: Array
-  },
   data() {
     return {
       story: {},
@@ -41,6 +39,7 @@ export default {
           this.articleHtml = storyApi.richTextResolver.render(this.story.long_text)
         }).catch(error => { 
           console.log(error)
+          router.push({ name: 'NotFound' })
         })
     }
   }
@@ -53,7 +52,11 @@ export default {
   max-width: 700px;
 }
 
-.article-title {text-align: center;}
+.article-title {
+  text-align: center;
+  margin: auto;
+  max-width: 800px;
+}
 
 .feature-image {
   max-width: 400px;

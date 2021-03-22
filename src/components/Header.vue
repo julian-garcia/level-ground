@@ -43,6 +43,7 @@ export default {
 }
 
 .cta {
+  display: none;
   position: absolute;
   right: 1rem;
   top: 0;
@@ -52,5 +53,9 @@ export default {
   text-decoration: none; 
   color: black; 
   padding: 0 1rem;
+}
+
+@media screen and (min-width: 900px) {
+  .cta { display: block; }
 }
 </style>
