@@ -74,7 +74,6 @@ export default {
         if (item.text) {
           this.itemText = storyApi.richTextResolver.render(item.text)
         }
-        console.log(item);
       });
     },
     goToEvent(url) {
@@ -98,6 +97,10 @@ export default {
 }
 
 .article-title {text-align: center;}
+
+.article:deep(iframe) {
+  max-width: 100%;
+}
 
 .left {
   grid-column: auto;

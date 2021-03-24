@@ -17,17 +17,22 @@ const routes = [
     component: Article,
   },
   {
-    name: "Events",
-    path: "/events",
-    component: Grid,
-  },
-  {
     path: "/event/:slug",
     component: Event,
   },
   {
     path: "/:slug",
     component: Page,
+  },
+  {
+    name: "Events",
+    path: "/events",
+    component: Grid,
+  },
+  {
+    name: "News",
+    path: "/news",
+    component: Grid,
   },
   {
     path: "/404",

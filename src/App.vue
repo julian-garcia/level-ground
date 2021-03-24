@@ -4,7 +4,7 @@
     <div class="leftbar"></div>
     <div class="content">
       <hr>
-      <router-view :stories="stories" />
+      <router-view :stories="stories" :key="$route.path" />
       <hr class="square">
     </div>
     <div class="rightbar"></div>
@@ -30,7 +30,8 @@ export default {
   },
   data () {
     return {
-      stories: []
+      stories: [],
+      name: this.$route.path
     }
   },
   created () {
@@ -60,7 +61,6 @@ export default {
             delete story.content.long_text
             return {...story.content, published_at: story.published_at, slug: story.slug}
           })
-        console.log(this.stories);
       })
       .catch((error) => {
         console.log(error);
@@ -83,6 +83,8 @@ export default {
   --highlight-colour: #e5511b;
   --highlight-colour-muted: #fecfc8;
   --button-font-size: 20px;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .container {
@@ -144,6 +146,10 @@ hr.square::after {
   width: 100%;
 }
 
+.page-title {
+  text-align: center;
+}
+
 input {
   border-radius: 5px;
   border: 1px solid var(--highlight-colour-muted);
@@ -185,7 +191,7 @@ input {
 }
 @media screen and (min-width: 900px) {
   .container {
-    grid-template-columns: [leftbar] .5fr [content] 3fr [rightbar] .5fr;
+    grid-template-columns: [leftbar] .3fr [content] 3fr [rightbar] .3fr;
   }
 }
 @media screen and (min-width: 1200px) {
