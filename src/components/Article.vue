@@ -64,5 +64,6 @@ export default {
 
 .feature-image {
   max-width: 400px;
+  width: 100%;
 }
 </style>

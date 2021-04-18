@@ -6,9 +6,9 @@
       <h2 class="title">IN <span class="reverse">E</span>MPATHY</h2>
     </div>
     <div>
-      <p>Level Ground is more than just an arts organization. Our goal is to build a community of unlike minds. Our immersive programming, panels, and moderated discussions encourage informal cultural exchanges that spark new friendships.</p>
-      <button class="button">Join Our Collective</button>
-      <router-link class="mission" to="/404">Our Mission</router-link>
+      <p>Through organizing and creating with artists, Level Ground is committed to destabilizing oppressive social structures through art making, community building, and resource sharing.</p>
+      <button class="button">Make a Donation Today</button>
+      <router-link class="mission" to="/404">Read About Our Mission</router-link>
     </div>
   </div>
   <div class="cards__feature">
@@ -106,6 +106,7 @@ export default {
     font-size: var(--button-font-size);
     color: black;
     margin: 0 1rem;
+    display: block;
   }
 
   .headline {
@@ -121,7 +122,7 @@ export default {
 
   .headline .title::after {
       content: '';
-      display: block;
+      display: none;
       width: 200px;
       height: 26px;
       position: absolute;
@@ -143,8 +144,7 @@ export default {
   }
 
   .headline .title:nth-child(2) {
-    /* text-align: right; */
-    margin-left: 13rem;
+    margin-left: 0;
   }
 
   .headline .title-container {
@@ -158,7 +158,7 @@ export default {
 
   .updates {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: auto;
     gap: 2rem;  
   }
 
@@ -178,9 +178,28 @@ export default {
   }
   .updates .card__text h2 { margin-top: 0; }
 
+  @media screen and (min-width: 600px) {
+    .updates {
+      grid-template-columns: 1fr 1fr;
+    }
+    .mission {
+      display: inline-block;
+    }
+  }
   @media screen and (min-width: 900px) {
+    .updates {
+      grid-template-columns: 3fr 1fr;
+    }
     .updates .card {
       grid-template-columns: 1fr 3fr;
+    }
+  }
+  @media screen and (min-width: 1150px) {
+    .headline .title::after {
+      display: block;
+    }
+    .headline .title:nth-child(2) {
+      margin-left: 13rem;
     }
   }
 </style>

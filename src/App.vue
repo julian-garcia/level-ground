@@ -81,15 +81,20 @@ export default {
   background: #fff7f7;
   --background: #fff7f7;
   --highlight-colour: #e5511b;
-  --highlight-colour-muted: #fecfc8;
+  --highlight-colour-muted: #ffe9e6;
+  --highlight-colour-light: #fef2f0;
   --button-font-size: 20px;
+}
+
+html, body {
   overflow-x: hidden;
-  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .container {
   display: grid;
-  grid-template-columns: [leftbar] 1rem [content] 3fr [rightbar] 1rem;
+  grid-template-columns: [leftbar] 1rem [content] 1fr [rightbar] 1rem;
 }
 
 .leftbar {
@@ -107,7 +112,7 @@ export default {
   max-width: 1350px;
 }
 
-p { line-height: 1.3; }
+p { line-height: 1.6rem; font-size: 1.1rem; }
 h1, h2, h3 { font-family: Playfair; }
 hr { 
   border: none; 
@@ -129,6 +134,12 @@ hr.square::after {
   border: 1px solid var(--highlight-colour);
 }
 
+a {
+  text-decoration: none; 
+  color: var(--highlight-colour);
+  font-weight: bold;
+}
+
 .button {
   border-radius: 5px;
   border: none;
@@ -138,8 +149,10 @@ hr.square::after {
   padding: .5rem 1rem;
   font-size: var(--button-font-size);
   font-family: Asap;
+  font-weight: normal;
   cursor: pointer;
   margin-bottom: 1rem;
+  display: inline-block;
 }
 
 .button.full-width {

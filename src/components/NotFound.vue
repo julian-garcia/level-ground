@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Not Found</h1> 
+    <h1>Page not Found</h1> 
   </div>
 </template>
 
@@ -12,5 +12,5 @@ export default {
 </script>
 
 <style scoped>
-
+  h1 { text-align: center; }
 </style>

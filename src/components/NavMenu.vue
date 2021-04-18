@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav-menu">
+  <ul class="nav-menu" :class="{show: showMenu}" @click="showMenu = false">
     <li class="nav-menu__item">
       <router-link to="/about">About</router-link>
     </li>
@@ -22,11 +22,23 @@
       <router-link to="/store">Store</router-link>
     </li>
   </ul>
+  <img src="../assets/images/hamburger.svg" alt="" @click="showMenu = !showMenu" class="toggle-menu">
 </template>
 
 <script>
 export default {
-  name: 'NavMenu'
+  name: 'NavMenu',
+  data() {
+    return {
+      showMenu: false
+    }
+  },
+  created() {
+    this.showMenu = false
+  },
+  mounted() {
+    window.addEventListener('resize', () => {this.showMenu = false})
+  }
 }
 </script>
 
@@ -44,17 +56,49 @@ export default {
 
 .nav-menu {
   display: none;
-  grid-template-columns: repeat(auto-fit, minmax(0,min-content));
-  justify-content: center;
   list-style-type: none;
-  max-width: 800px;
-  margin: 1rem auto;
   padding: 0;
-  font-weight: bold;
-  font-size: 1.2rem;
+}
+
+.nav-menu.show {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, .9);
+}
+
+.nav-menu.show .nav-menu__item a { 
+  display: inline-block;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 24px;
+}
+
+.toggle-menu {
+  position: fixed;
+  display: block;
+  left: .5rem;
+  top: .5rem;
 }
 
 @media screen and (min-width: 900px) {
-  .nav-menu { display: grid; }
+  .nav-menu { 
+    display: grid; 
+    position: relative;
+    grid-template-columns: repeat(auto-fit, minmax(0,min-content));
+    justify-content: center;
+    max-width: 800px;
+    margin: 1rem auto;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .toggle-menu {
+    display: none;
+  }
 }
 </style>

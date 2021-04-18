@@ -3,7 +3,7 @@
     <h1 class="page-title">{{$route.name}}</h1>
     <hr>
     <div class="grid">
-      <div v-for="item in items" class="grid__item" :key="item.uuid" @click="goTo('event', item.slug)">
+      <div v-for="item in items" class="grid__item" :key="item.uuid" @click="goTo(mapComponent().slug, item.slug)">
         <template v-if="item.component === 'Event'">
           <template v-if="item.event_image">
             <div v-if="item.event_image.filename" 
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     items() {
-      return this.stories.filter((story) => story.component === this.mapComponent())
+      return this.stories.filter((story) => story.component === this.mapComponent().component)
     }
   },
   methods: {
@@ -52,10 +52,13 @@ export default {
     },
     mapComponent() {
       const nameComponent = [
-        { routeName: 'Events', component: 'Event' },
-        { routeName: 'News', component: 'Post' }
+        { routeName: 'Events', component: 'Event', slug: 'event' },
+        { routeName: 'News', component: 'Post', slug: 'article' }
       ]
-      return nameComponent.filter(item => item.routeName === this.$route.name)[0].component || 'Post';
+      return {
+        component: nameComponent.filter(item => item.routeName === this.$route.name)[0].component || 'Post',
+        slug: nameComponent.filter(item => item.routeName === this.$route.name)[0].slug
+      };
     }
   }
 }
@@ -64,9 +67,8 @@ export default {
 <style scoped>
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 330px));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
   gap: 2rem;
-  max-width: 1100px;
   margin: auto;
   justify-content: center;
 }

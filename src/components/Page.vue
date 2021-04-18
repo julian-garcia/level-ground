@@ -102,6 +102,60 @@ export default {
   max-width: 100%;
 }
 
+:deep(ol) {
+  padding: 0;
+  list-style: none;
+  counter-reset: list-counter;
+}
+
+:deep(ul) {
+  padding: 0;
+  list-style: none;
+}
+
+:deep(li) {
+  padding: 5px 20px;
+  margin: 0;
+  border-left: 5px solid var(--highlight-colour-muted);
+  border-radius: 10px;
+}
+
+:deep(li>*) {
+  display: inline-block;
+}
+
+:deep(li p) {
+  padding-left: 10px;
+  max-width: 600px;
+}
+
+:deep(li:nth-child(odd)) {
+  background: linear-gradient(90deg, var(--highlight-colour-muted) 0%, transparent 100%);
+}
+
+:deep(li:nth-child(even)) {
+  background: linear-gradient(90deg, var(--highlight-colour-light) 0%, transparent 100%);
+}
+
+:deep(li::before) {
+  font-family: Playfair;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: var(--highlight-colour);
+}
+
+:deep(ul>li::before) {
+  content: '◍'
+}
+
+:deep(ol>li) {
+  counter-increment: list-counter;
+}
+
+:deep(ol>li::before) {
+  content: counter(list-counter);
+}
+
 .left {
   grid-column: auto;
 }
