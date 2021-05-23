@@ -12,36 +12,35 @@
     </div>
   </div>
   <div class="cards__feature">
-    <div v-for="item in featureStories" class="card__feature" :key="item.uuid" @click="goTo(item.slug)">
-      <img :src="item.image.filename" alt="">
+    <div v-for="item in getFeaturePosts" class="card__feature" :key="item.ID" @click="goTo(item.post_name)">
+      <img :src="item.acf.featured_image" alt="">
       <p class="featured">Featured Project</p>
-      <h2>{{item.title}}</h2>
-      <p>{{item.intro}}</p>
-      <p>{{$filters.formatDate(item.published_at) }}</p>
+      <h2>{{item.post_title}}</h2>
+      <p>{{item.post_excerpt}}</p>
+      <p>{{$filters.formatDate(item.post_date) }}</p>
     </div>
   </div>
   <div class="updates">
     <div class="latest">
       <h2>Latest Updates</h2>
       <hr>
-      <div v-for="item in latestStories" class="card" :key="item.uuid" @click="goTo(item.slug)">
-        <img class="card__image" :src="item.image.filename" alt="">
+      <div v-for="item in getPosts" class="card" :key="item.ID" @click="goTo(item.post_name)">
+        <img class="card__image" :src="item.acf.featured_image" alt="">
         <div class="card__text">
-          <h2>{{item.title}}</h2>
-          <p>{{item.intro}}</p>
-          <p>{{$filters.formatDate(item.published_at) }}</p>
+          <h2 v-if="item.post_title">{{item.post_title}}</h2>
+          <p v-html="item.post_excerpt" v-if="item.post_excerpt"></p>
+          <p>{{$filters.formatDate(item.post_date) }}</p>
         </div>
       </div>
     </div>
     <div class="popular">
       <h2>Popular</h2>
       <hr>
-      <div v-for="item in popularStories" class="card-side" :key="item.uuid" @click="goTo(item.slug)">
-        <!-- <img :src="item.image.filename" alt=""> -->
-        <div class="card-side__image" :style='{backgroundImage: "url(" + item.image.filename + ")"}'></div>
+      <div v-for="item in getPopularPosts" class="card-side" :key="item.ID" @click="goTo(item.post_name)">
+        <div class="card-side__image" :style='{backgroundImage: "url(" + item.acf.featured_image + ")"}'></div>
         <div class="card-side__text">
-          <h2>{{item.title}}</h2>
-          <p>{{$filters.formatDate(item.published_at) }}</p>
+          <h2>{{item.post_title}}</h2>
+          <p>{{$filters.formatDate(item.post_date) }}</p>
         </div>
       </div>
     </div>
@@ -55,17 +54,18 @@ import router from '../router'
 export default {
   name: 'HomePage',
   props: {
-    stories: Array
+    stories: Array,
+    posts: Array
   },
   computed: {
-    latestStories() {
-      return this.stories.filter((story) => !story.feature && story.component === 'Post')
+    getPopularPosts() {
+      return this.posts.filter(post => post.acf.popular === true);
     },
-    featureStories() {
-      return this.stories.filter((story) => story.feature && story.component === 'Post')
+    getPosts() {
+      return this.posts.filter(post => post.acf.feature !== true);
     },
-    popularStories() {
-      return this.stories.filter((story) => !story.feature && story.popular && story.component === 'Post')
+    getFeaturePosts() {
+      return this.posts.filter(post => post.acf.feature === true);
     }
   },
   methods: {

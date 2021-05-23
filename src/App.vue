@@ -4,7 +4,7 @@
     <div class="leftbar"></div>
     <div class="content">
       <hr>
-      <router-view :stories="stories" :key="$route.path" />
+      <router-view :posts="posts" :pages="pages" :events="events" :key="$route.path" />
       <hr class="square">
     </div>
     <div class="rightbar"></div>
@@ -15,12 +15,7 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import StoryblokClient from 'storyblok-js-client'
 import '@csstools/normalize.css'
-
-let storyApi = new StoryblokClient({
-  accessToken: process.env.VUE_APP_STORYBLOK_API
-})
 
 export default {
   name: 'App',
@@ -30,42 +25,22 @@ export default {
   },
   data () {
     return {
-      stories: [],
+      posts: [],
+      pages: [],
+      events: [],
       name: this.$route.path
     }
   },
-  created () {
-    window.storyblok.init({
-      accessToken: process.env.VUE_APP_STORYBLOK_API
-    })
-    window.storyblok.on('change', () => {
-      this.getStories('draft')
-    })
-    window.storyblok.pingEditor(() => {
-      if (window.storyblok.isInEditor()) {
-        this.getStories('draft')
-      } else {
-        this.getStories('published')
-      }
-    })
-  },
-  methods: {
-    getStories(version) {
-      storyApi.get('cdn/stories', {
-        // starts_with: "article/",
-        version: version
-      })
-      .then((response) => {
-        this.stories = response.data.stories
-          .map(story => { 
-            delete story.content.long_text
-            return {...story.content, published_at: story.published_at, slug: story.slug}
-          })
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    }
+  mounted(){
+    fetch('http://level-ground.local/wp-json/api/post')
+      .then((r) => r.json())
+      .then((res) => this.posts = res);
+    fetch('http://level-ground.local/wp-json/wp/v2/pages')
+      .then((r) => r.json())
+      .then((res) => this.pages = res);
+    fetch('http://level-ground.local/wp-json/api/event')
+      .then((r) => r.json())
+      .then((res) => this.events = res);
   }
 }
 </script>
@@ -153,6 +128,8 @@ a {
   cursor: pointer;
   margin-bottom: 1rem;
   display: inline-block;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .button.full-width {

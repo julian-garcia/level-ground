@@ -1,71 +1,56 @@
 <template>
-  <template v-if="story.event_image">
-    <div v-if="story.event_image.filename" class="banner-image" :style='{backgroundImage: "url(" + story.event_image.filename + ")"}'>
-      <h1 class="event-title">{{story.event_title}}</h1>
+  <template v-if="event.acf">
+    <div v-if="event.acf.featured_image" class="banner-image" :style='{backgroundImage: "url(" + event.acf.featured_image + ")"}'>
+      <h1 class="event-title">{{event.post_title}}</h1>
     </div>
-    <div v-if="!story.event_image.filename" class="banner-image">
-      <h1 class="event-title">{{story.event_title}}</h1>
+    <div v-if="!event.acf.featured_image" class="banner-image">
+      <h1 class="event-title">{{event.post_title}}</h1>
     </div>
   </template>
   <article class="event">
     <div class="left">
-      <p class="event-date">{{$filters.formatDate(story.event_date) }}</p>
-      <p>{{ story.event_time }}</p>
-      <p>{{ story.event_address }}</p>
-      <button class="button full-width">Attend this event</button>
-      <button class="button full-width">Donate</button>
+      <template v-if="event.acf">
+        <p class="event-date">{{$filters.formatDate(event.acf.event_date) }}</p>
+        <p>{{ event.acf.event_time }}</p>
+        <p>{{ event.acf.event_address }}</p>
+        <a class="button full-width" :href="`${event.acf.event_link}`" target="_blank">Attend this event</a>
+        <button class="button full-width">Donate</button>
+      </template>
     </div>
     <div>
-      <p>{{story.event_description}}</p>
+      <p>{{event.post_excerpt}}</p>
       <div v-html="eventHtml"></div>
     </div>
     <div class="right">
-      <h2>Upcoming Events</h2>
-      <div v-for="item in events" :key="item.uuid" @click="goToEvent(item.slug)">
-        <p class="event-date">{{$filters.formatDate(item.event_date) }}</p>
-        <p>{{item.event_description}}</p>
-      </div>
+      <Events :events="events" />
     </div>
   </article>
 </template>
 
 <script>
-import StoryblokClient from 'storyblok-js-client'
 import router from '../router'
-
-let storyApi = new StoryblokClient({
-  accessToken: process.env.VUE_APP_STORYBLOK_API
-})
+import Events from './Events.vue'
 
 export default {
   name: 'Event',
   props: {
-    stories: Array
+    events: Array
   },
+  components: { Events },
   data() {
     return {
-      story: {}
+      event: {}
     }
   },
-  created() {
-    this.getStory()
-  },
-  methods: {
-    getStory() {
-      storyApi.get(`cdn/stories/event/${this.$route.params.slug}`, {})
-        .then(response => {
-          this.story = response.data.story.content
-          this.eventHtml = storyApi.richTextResolver.render(this.story.event_body)
-        }).catch(error => { 
-          console.log(error)
-          router.push({ name: 'NotFound' })
-        })
-    }
-  },
-  computed: {
-    events() {
-      return this.stories.filter((story) => story.component === 'Event')
-    }
+  created(){
+    fetch(`http://level-ground.local/wp-json/api/event/${this.$route.params.slug}`)
+      .then((r) => r.json())
+      .then((res) => {
+        this.event = res; 
+        this.eventHtml = this.event.content;
+        if (!this.event.content) { router.push({path: `/404`}) }
+      })
+      .catch(() => router.push({path: `/404`}));
   }
 }
 </script>

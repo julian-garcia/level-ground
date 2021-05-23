@@ -1,47 +1,37 @@
 <template>
-  <h1 class="article-title">{{story.title}}</h1>
+  <h1 class="article-title">{{post.post_title}}</h1>
   <hr>
-  <article class="article">
-    <p>{{story.intro}}</p>
-    <img v-if="story.image" :src="story.image.filename" class="feature-image" alt="">
-    <p>{{$filters.formatDate(story.published_at) }}</p>
-    <div v-html="articleHtml"></div>
+  <article class="article" v-if="post">
+    <p v-if="post.post_excerpt" >{{post.post_excerpt}}</p>
+    <img v-if="post.acf" :src="post.acf.featured_image" class="feature-image" alt="">
+    <p>{{$filters.formatDate(post.post_date) }}</p>
+    <div v-html="articleHtml" v-if="articleHtml"></div>
   </article>
 </template>
 
 <script>
-import StoryblokClient from 'storyblok-js-client'
 import router from '../router'
-
-let storyApi = new StoryblokClient({
-  accessToken: process.env.VUE_APP_STORYBLOK_API
-})
 
 export default {
   name: 'Article',
   data() {
     return {
-      story: {},
+      post: {},
       articleHtml: ''
     }
   },
-  created() {
-    this.getStory()
+  created(){
+    fetch(`http://level-ground.local/wp-json/api/post/${this.$route.params.slug}`)
+      .then((r) => r.json())
+      .then((res) => {
+        this.post = res; 
+        this.articleHtml = this.post.content; 
+        if (!this.post.content) { router.push({path: `/404`}) }
+      })
+      .catch(() => router.push({path: `/404`}));
   },
-  methods: {
-    getStory() {
-      storyApi.get(`cdn/stories/article/${this.$route.params.slug}`, {})
-        .then(response => {
-          this.story = {
-            ...response.data.story.content, 
-            published_at: response.data.story.published_at
-          }
-          this.articleHtml = storyApi.richTextResolver.render(this.story.long_text)
-        }).catch(error => { 
-          console.log(error)
-          router.push({ name: 'NotFound' })
-        })
-    }
+  computed: {
+
   }
 }
 </script>

@@ -1,25 +1,7 @@
 <template>
   <ul class="nav-menu" :class="{show: showMenu}" @click="showMenu = false">
-    <li class="nav-menu__item">
-      <router-link to="/about">About</router-link>
-    </li>
-    <li class="nav-menu__item">
-      <router-link to="/collective">Collective</router-link>
-    </li>
-    <li class="nav-menu__item">
-      <router-link to="/studio">Studio</router-link>
-    </li>
-    <li class="nav-menu__item">
-      <router-link to="/events">Events</router-link>
-    </li>
-    <li class="nav-menu__item">
-      <router-link to="/membership">Membership</router-link>
-    </li>
-    <li class="nav-menu__item">
-      <router-link to="/news">News&nbsp;&amp;&nbsp;Stories</router-link>
-    </li>
-    <li class="nav-menu__item">
-      <router-link to="/store">Store</router-link>
+    <li class="nav-menu__item" v-for="item in menuItems" :key="item.ID">
+      <router-link :to="item.slug">{{item.title}}</router-link>
     </li>
   </ul>
   <img src="../assets/images/hamburger.svg" alt="" @click="showMenu = !showMenu" class="toggle-menu">
@@ -30,11 +12,20 @@ export default {
   name: 'NavMenu',
   data() {
     return {
+      menuItems: Array,
       showMenu: false
     }
   },
   created() {
     this.showMenu = false
+    fetch(`http://level-ground.local/wp-json/api/menu`)
+      .then((r) => r.json())
+      .then((res) => {
+        this.menuItems = res; 
+        this.menuItems.map(element => {
+          element['slug'] = element.url.indexOf('http') === -1 ? element.url : `/${element.url.split('/')[3]}`
+        })
+      })
   },
   mounted() {
     window.addEventListener('resize', () => {this.showMenu = false})
@@ -90,7 +81,7 @@ export default {
   .nav-menu { 
     display: grid; 
     position: relative;
-    grid-template-columns: repeat(auto-fit, minmax(0,min-content));
+    grid-template-columns: repeat(auto-fit, minmax(0,max-content));
     justify-content: center;
     max-width: 800px;
     margin: 1rem auto;

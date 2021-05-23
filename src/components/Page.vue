@@ -1,88 +1,52 @@
-<template>
-  <h1 class="article-title">{{story.title}}</h1>
+<template v-if="page">
+  <h1 class="article-title" v-if="page.post_title">{{page.post_title}}</h1>
   <hr>
   <article class="article">
     <div class="left">
-      <div v-html="itemText" v-if="itemText"></div>
+      <p v-html="page.acf.headline" v-if="page.acf" class="headline"></p>
     </div>
-    <div v-html="articleHtml" v-if="articleHtml"></div>
-    <div class="right" v-if="story.right_sidebar">
-      <template v-for="sidebar_item in story.right_sidebar" :key="sidebar_item.uuid">
-        <div :class="{top: sidebar_item.position === 'top'}" v-if="sidebar_item.feature === 'events'">
-          <h2>Upcoming Events</h2>
-          <div v-for="item in events" :key="item.uuid" @click="goToEvent(item.slug)" class="event">
-            <p class="event-date">{{$filters.formatDate(item.event_date) }}</p>
-            <p>{{item.event_description}}</p>
-          </div>
-        </div>
-      </template>
+    <div v-html="pageHtml" v-if="pageHtml"></div>
+    <div class="right">
+      <div class="top" v-if="events">
+        <Events :events="events" />
+      </div>
     </div>
   </article>
 </template>
 
 <script>
-import StoryblokClient from 'storyblok-js-client'
 import router from '../router'
-
-let storyApi = new StoryblokClient({
-  accessToken: process.env.VUE_APP_STORYBLOK_API
-})
+import Events from './Events.vue'
 
 export default {
   name: 'Page',
   props: {
-    stories: Array
+    pages: Array
   },
+  components: { Events },
   data() {
     return {
-      story: {},
-      itemText: '',
-      articleHtml: ''
+      page: {},
+      events: [],
+      itemText: ''
     }
   },
-  created() {
-    this.getStory()
-  },
-  updated() {
-    this.$nextTick(function () {
-      // Code that will run only after the entire view has been re-rendered
-      const codeElement = document.querySelector('code');
-      if (codeElement) {
-        const iframeElement = codeElement.innerText;
-        const newDiv = document.createElement('div');
-        newDiv.innerHTML = iframeElement;
-        document.querySelector('pre').appendChild(newDiv);
-        codeElement.remove();
-      }
-    })
+  created(){
+    fetch(`http://level-ground.local/wp-json/api/page/${this.$route.params.slug}`)
+      .then((r) => r.json())
+      .then((res) => {
+        this.page = res; 
+        this.pageHtml = this.page.content; 
+        if (!this.page.content) { router.push({path: `/404`}) }
+      })
+      .catch(() => router.push({path: `/404`}));
+    fetch(`http://level-ground.local/wp-json/api/event`)
+      .then((r) => r.json())
+      .then((res) => {this.events = res;});
   },
   methods: {
-    getStory() {
-      storyApi.get(`cdn/stories/${this.$route.params.slug}`, {})
-        .then(response => {
-          console.log(response.data.story.content)
-          this.story = response.data.story.content
-          this.articleHtml = storyApi.richTextResolver.render(this.story.body)
-          this.getSidebarData(this.story.left_sidebar)
-        }).catch(error => { 
-          console.log(error)
-          router.push({ name: 'NotFound' })
-        })
-    },
-    getSidebarData(sideBarArray) {
-      sideBarArray.forEach(item => {
-        if (item.text) {
-          this.itemText = storyApi.richTextResolver.render(item.text)
-        }
-      });
-    },
     goToEvent(url) {
       router.push({path: `/event/${url}`})
-    }
-  },
-  computed: {
-    events() {
-      return this.stories.filter((story) => story.component === 'Event')
     }
   }
 }
@@ -102,57 +66,62 @@ export default {
   max-width: 100%;
 }
 
-:deep(ol) {
+.article :deep(ol) {
   padding: 0;
   list-style: none;
   counter-reset: list-counter;
 }
 
-:deep(ul) {
+.article :deep(ul) {
   padding: 0;
   list-style: none;
 }
 
-:deep(li) {
-  padding: 5px 20px;
+.article :deep(li) {
+  padding: 15px 20px 15px 50px;
   margin: 0;
   border-left: 5px solid var(--highlight-colour-muted);
   border-radius: 10px;
+  position: relative;
+  line-height: 1.5;
 }
 
-:deep(li>*) {
+.article :deep(li>*) {
   display: inline-block;
 }
 
-:deep(li p) {
+.article :deep(li p) {
   padding-left: 10px;
   max-width: 600px;
 }
 
-:deep(li:nth-child(odd)) {
+.article :deep(li:nth-child(odd)) {
   background: linear-gradient(90deg, var(--highlight-colour-muted) 0%, transparent 100%);
 }
 
-:deep(li:nth-child(even)) {
+.article :deep(li:nth-child(even)) {
   background: linear-gradient(90deg, var(--highlight-colour-light) 0%, transparent 100%);
 }
 
-:deep(li::before) {
+.article :deep(li::before) {
   font-family: Playfair;
   font-weight: bold;
   font-size: 1.5rem;
   color: var(--highlight-colour);
+  position: absolute;
+  left: 15px;
+  line-height: 1;
 }
 
-:deep(ul>li::before) {
+.article :deep(ul>li::before) {
   content: '◍'
 }
 
-:deep(ol>li) {
+.article :deep(ol>li) {
   counter-increment: list-counter;
 }
 
-:deep(ol>li::before) {
+.article :deep(ol>li::before) {
   content: counter(list-counter);
 }
 
