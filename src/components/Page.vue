@@ -32,7 +32,7 @@ export default {
     }
   },
   created(){
-    fetch(`http://level-ground.local/wp-json/api/page/${this.$route.params.slug}`)
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/page/${this.$route.params.slug}`)
       .then((r) => r.json())
       .then((res) => {
         this.page = res; 
@@ -40,7 +40,7 @@ export default {
         if (!this.page.content) { router.push({path: `/404`}) }
       })
       .catch(() => router.push({path: `/404`}));
-    fetch(`http://level-ground.local/wp-json/api/event`)
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)
       .then((r) => r.json())
       .then((res) => {this.events = res;});
   },

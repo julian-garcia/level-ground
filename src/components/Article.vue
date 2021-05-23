@@ -21,7 +21,7 @@ export default {
     }
   },
   created(){
-    fetch(`http://level-ground.local/wp-json/api/post/${this.$route.params.slug}`)
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/post/${this.$route.params.slug}`)
       .then((r) => r.json())
       .then((res) => {
         this.post = res; 

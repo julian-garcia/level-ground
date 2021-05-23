@@ -43,7 +43,7 @@ export default {
     }
   },
   created(){
-    fetch(`http://level-ground.local/wp-json/api/event/${this.$route.params.slug}`)
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/event/${this.$route.params.slug}`)
       .then((r) => r.json())
       .then((res) => {
         this.event = res; 

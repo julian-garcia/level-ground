@@ -18,7 +18,7 @@ export default {
   },
   created() {
     this.showMenu = false
-    fetch(`http://level-ground.local/wp-json/api/menu`)
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/menu`)
       .then((r) => r.json())
       .then((res) => {
         this.menuItems = res; 

@@ -32,13 +32,13 @@ export default {
     }
   },
   mounted(){
-    fetch('http://level-ground.local/wp-json/api/post')
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/post`)
       .then((r) => r.json())
       .then((res) => this.posts = res);
-    fetch('http://level-ground.local/wp-json/wp/v2/pages')
+    fetch(`${process.env.VUE_APP_CMS_URL}/wp/v2/pages`)
       .then((r) => r.json())
       .then((res) => this.pages = res);
-    fetch('http://level-ground.local/wp-json/api/event')
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)
       .then((r) => r.json())
       .then((res) => this.events = res);
   }

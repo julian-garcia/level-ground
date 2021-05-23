@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import StoryblokVue from 'storyblok-vue'
 import moment from 'moment'
 import router from './router'
 
@@ -12,5 +11,4 @@ app.config.globalProperties.$filters = {
   }
 }
 
-app.directive(StoryblokVue)
 app.use(router).mount('#app')
