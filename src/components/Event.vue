@@ -22,7 +22,7 @@
       <div v-html="eventHtml"></div>
     </div>
     <div class="right">
-      <Events :events="events" />
+      <Events :events="events.slice(0,5)" />
     </div>
   </article>
 </template>

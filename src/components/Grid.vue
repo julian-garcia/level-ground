@@ -74,6 +74,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url(../assets/images/event.jpg);
-  height: 120px;
+  height: 190px;
 }
 </style>

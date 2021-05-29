@@ -48,12 +48,14 @@ export default {
   max-width: 800px;
 }
 
-.article:deep(iframe) {
+.article:deep(iframe),
+.article:deep(img) {
   max-width: 100%;
 }
 
 .feature-image {
-  max-width: 400px;
-  width: 100%;
+  max-width: 100%;
+  margin: auto;
+  display: block;
 }
 </style>

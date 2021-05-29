@@ -13,7 +13,7 @@
   </div>
   <div class="cards__feature">
     <div v-for="item in getFeaturePosts" class="card__feature" :key="item.ID" @click="goTo(item.post_name)">
-      <img :src="item.acf.featured_image" alt="">
+      <div class="featured__image" :style='{backgroundImage: "url(" + item.acf.featured_image + ")"}'></div>
       <p class="featured">Featured Project</p>
       <h2>{{item.post_title}}</h2>
       <p>{{item.post_excerpt}}</p>
@@ -59,13 +59,13 @@ export default {
   },
   computed: {
     getPopularPosts() {
-      return this.posts.filter(post => post.acf.popular === true);
+      return this.posts.filter(post => post.acf.popular === true).slice(0, 5);
     },
     getPosts() {
       return this.posts.filter(post => post.acf.feature !== true);
     },
     getFeaturePosts() {
-      return this.posts.filter(post => post.acf.feature === true);
+      return this.posts.filter(post => post.acf.feature === true).slice(0, 3);
     }
   },
   methods: {
@@ -81,10 +81,15 @@ export default {
     max-width: 1100px;
     margin: auto;
   }
+
   .cards__feature, .headline {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+  }
+
+  .cards__feature {
+    margin-bottom: 2rem;
   }
 
   .card__feature {
@@ -99,6 +104,13 @@ export default {
   .featured {
     text-transform: uppercase;
     color: var(--highlight-colour);
+  }
+
+  .featured__image {
+    height: 250px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .mission {
@@ -170,11 +182,11 @@ export default {
   }
   .updates .card-side { cursor: pointer; }
 
-  .updates .card__image { width: 100% }
+  .updates .card__image { width: 100%; max-width: 300px; }
   .updates .card-side__image { 
     background-size: cover;
     background-repeat: no-repeat;
-    height: 120px;
+    height: 200px;
   }
   .updates .card__text h2 { margin-top: 0; }
 

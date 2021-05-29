@@ -179,6 +179,17 @@ input {
   src: url("./assets/fonts/PlayfairDisplay-BoldItalic.woff2") format("woff2"),
        url("./assets/fonts/PlayfairDisplay-BoldItalic.woff") format("woff");
 }
+@media screen and (min-width: 300px) {
+  .container {
+    padding: 0 10px;
+    grid-template-columns: [leftbar] 0 [content] 1fr [rightbar] 0;
+  }
+}
+@media screen and (min-width: 600px) {
+  .container {
+    padding: 0 30px;
+  }
+}
 @media screen and (min-width: 900px) {
   .container {
     grid-template-columns: [leftbar] .3fr [content] 3fr [rightbar] .3fr;
