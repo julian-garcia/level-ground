@@ -65,7 +65,7 @@ export default {
       return this.posts.filter(post => post.acf.feature !== true);
     },
     getFeaturePosts() {
-      return this.posts.filter(post => post.acf.feature === true).slice(0, 3);
+      return this.posts.filter(post => post.acf.feature === true).slice(0, 2);
     }
   },
   methods: {
@@ -95,6 +95,29 @@ export default {
   .card__feature {
     text-align: left;
     cursor: pointer;
+    position: relative;
+  }
+
+  .card__feature::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .card__feature:first-of-type::before {
+    top: -25px;
+    left: -25px;
+    background-image: url(../assets/images/circles-feature.svg);
+  }
+
+  .card__feature:last-of-type::before {
+    top: 75px;
+    right: -25px;
+    background-image: url(../assets/images/diagonals.svg);
   }
 
   .card__feature img {
@@ -189,6 +212,50 @@ export default {
     height: 200px;
   }
   .updates .card__text h2 { margin-top: 0; }
+  .latest>h2 {
+    position: relative;
+    background: var(--background);
+    padding: 0 0 5px 5px;
+    margin-left: -5px;
+  }
+  .latest>h2::before {
+    content: '';
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: -30px;
+    top: 0;
+    border-radius: 50%;
+    background: var(--accent-colour-2);
+    z-index: -1;
+  }
+  .popular {
+    position: relative; 
+    background: var(--background);
+    margin-bottom: 100px;
+  }
+  .popular::before {
+    content: '';
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent-colour-2);
+    right: -90px;
+    bottom: -80px;
+    z-index: -1;
+  }
+  .popular>h2 {position: relative;}
+  .popular>h2::before {
+    content: '';
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--accent-colour);
+    right: -25px;
+    bottom: -25px;
+  }
 
   @media screen and (min-width: 600px) {
     .updates {

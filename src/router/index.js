@@ -25,6 +25,10 @@ const routes = [
     component: Page,
   },
   {
+    path: "/:slug/:slug",
+    component: Page,
+  },
+  {
     name: "Events",
     path: "/events",
     component: Grid,

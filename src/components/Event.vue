@@ -47,8 +47,10 @@ export default {
       .then((r) => r.json())
       .then((res) => {
         this.event = res; 
+        if (!this.event.content) { 
+          this.event.content = `<h2 style="text-align: center">Details to be confirmed</h2>`
+        }
         this.eventHtml = this.event.content;
-        if (!this.event.content) { router.push({path: `/404`}) }
       })
       .catch(() => router.push({path: `/404`}));
   }

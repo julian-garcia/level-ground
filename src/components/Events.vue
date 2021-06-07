@@ -1,6 +1,6 @@
 <template>
   <h2>Upcoming Events</h2>
-  <div v-for="item in events" :key="item.uuid" @click="goToEvent(item.post_name)" :style="{cursor: 'pointer'}">
+  <div v-for="item in events" :key="item.uuid" @click="goToEvent(item.post_name)" class="event">
     <h3 class="event-title">{{item.post_title}}:</h3>
     <p class="event-date">{{$filters.formatDate(item.post_date) }}</p>
   </div>
@@ -23,16 +23,19 @@ export default {
 </script>
 
 <style scoped>
+.event {
+  cursor: pointer;
+}
 
 .event-title {
   display: inline-block;
-  margin:  0 10px 20px 0;
+  margin:  0 10px 10px 0;
 }
 
 .event-date {
   color: var(--highlight-colour);
   display: inline-block;
-  margin: 0;
+  margin: 0 0 20px;
 }
 
 </style>

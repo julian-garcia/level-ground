@@ -2,6 +2,11 @@
   <ul class="nav-menu" :class="{show: showMenu}" @click="showMenu = false">
     <li class="nav-menu__item" v-for="item in menuItems" :key="item.ID">
       <router-link :to="item.slug">{{item.title}}</router-link>
+      <ul class="nav-menu__sub" v-if="item.submenu.length">
+        <li v-for="item in item.submenu" :key="item.ID">
+          <router-link :to="item.slug">{{item.title}}</router-link>
+        </li>
+      </ul>
     </li>
   </ul>
   <img src="../assets/images/hamburger.svg" alt="" @click="showMenu = !showMenu" class="toggle-menu">
@@ -21,9 +26,13 @@ export default {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/menu`)
       .then((r) => r.json())
       .then((res) => {
-        this.menuItems = res; 
+        this.menuItems = res.filter(item => item.post_parent === 0); 
         this.menuItems.map(element => {
           element['slug'] = element.url.indexOf('http') === -1 ? element.url : `/${element.url.split('/')[3]}`
+          element['submenu'] = res.filter(item => item.post_parent !== 0 && item.post_parent === parseInt(element.object_id))
+          element['submenu'].forEach(item => {
+            item['slug'] = item.url.indexOf('http') === -1 ? item.url : `/${item.url.split('/')[3]}/${item.url.split('/')[4]}`
+          })
         })
       })
   },
@@ -34,11 +43,11 @@ export default {
 </script>
 
 <style scoped>
-.nav-menu__item a { 
+.nav-menu__item > a { 
   text-decoration: none; 
   color: black; 
   display: block;
-  padding: 0 1rem;
+  padding: 10px 1rem;
 }
 
 .nav-menu__item a:hover, a.router-link-active {
@@ -68,6 +77,7 @@ export default {
   margin: 10px auto;
   padding: 10px;
   font-size: 24px;
+  position: relative;
 }
 
 .toggle-menu {
@@ -88,8 +98,31 @@ export default {
     font-weight: bold;
     font-size: 1.2rem;
   }
+  .nav-menu__item > a:hover+.nav-menu__sub {
+    opacity: 1;
+    z-index: 1;
+  }
   .toggle-menu {
     display: none;
+  }
+  .nav-menu__sub {
+    position: absolute;
+    list-style: none;
+    padding: 10px;
+    background: rgba(255, 255, 255, .8);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity .3s ease-in-out;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+  }
+  .nav-menu__sub:hover {
+    opacity: 1;
+    z-index: 1;
+  }
+  .nav-menu__sub a {
+    display: block;
+    padding: 5px 1rem 5px 1rem;
+    text-align: left;
   }
 }
 </style>

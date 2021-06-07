@@ -1,7 +1,7 @@
 <template v-if="page">
   <h1 class="article-title" v-if="page.post_title">{{page.post_title}}</h1>
   <hr>
-  <article class="article">
+  <article class="article" v-if="(page && !page.acf) || (page.acf && !page.acf.form_content)">
     <div class="left">
       <p v-html="page.acf.headline" v-if="page.acf" class="headline"></p>
     </div>
@@ -11,6 +11,10 @@
         <Events :events="events" />
       </div>
     </div>
+  </article>
+  <article class="article columns" v-if="page.acf && page.acf.form_content">
+    <div class="column" v-html="pageHtml" v-if="pageHtml"></div>
+    <div class="column" v-html="page.acf.form_content"></div>
   </article>
 </template>
 
@@ -36,8 +40,10 @@ export default {
       .then((r) => r.json())
       .then((res) => {
         this.page = res; 
+        if (!this.page.content) {
+          this.page.content = `<h2 style="text-align: center">Under construction</h2>`
+        }
         this.pageHtml = this.page.content; 
-        if (!this.page.content) { router.push({path: `/404`}) }
       })
       .catch(() => router.push({path: `/404`}));
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)
@@ -125,6 +131,14 @@ export default {
   content: counter(list-counter);
 }
 
+.columns.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  margin: auto;
+}
+
 .left {
   grid-column: auto;
 }
@@ -151,6 +165,9 @@ export default {
   }
   .right {
     grid-column: right;
+  }
+  .columns {
+    max-width: 1100px;
   }
 }
 </style>
