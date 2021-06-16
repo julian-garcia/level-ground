@@ -43,14 +43,19 @@ export default {
 </script>
 
 <style scoped>
-.nav-menu__item > a { 
+.nav-menu__item {
+  text-align: left;
+}
+
+.nav-menu__item a { 
   text-decoration: none; 
   color: black; 
   display: block;
   padding: 10px 1rem;
+  transition: color .3s ease-in-out;
 }
 
-.nav-menu__item a:hover, a.router-link-active {
+.nav-menu__item a:hover, .nav-menu__item a.router-link-active {
   color: var(--highlight-colour);
 }
 
@@ -58,6 +63,7 @@ export default {
   display: none;
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .nav-menu.show {
@@ -65,7 +71,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  margin: 0;
+  padding: 1rem 2rem;
   z-index: 9;
   width: 100%;
   height: 100%;
@@ -74,17 +80,24 @@ export default {
 
 .nav-menu.show .nav-menu__item a { 
   display: inline-block;
-  margin: 10px auto;
+  margin: 0 auto;
   padding: 10px;
   font-size: 24px;
   position: relative;
 }
 
+.nav-menu__sub {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
 .toggle-menu {
   position: fixed;
   display: block;
-  left: .5rem;
-  top: .5rem;
+  left: 1rem;
+  top: 1rem;
+  padding: 1rem;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 900px) {
@@ -98,6 +111,12 @@ export default {
     font-weight: bold;
     font-size: 1.2rem;
   }
+  .nav-menu__item {
+    text-align: center;
+  }
+  .nav-menu.show .nav-menu__item a { 
+    margin: 10px auto;
+  }
   .nav-menu__item > a:hover+.nav-menu__sub {
     opacity: 1;
     z-index: 1;
@@ -107,13 +126,13 @@ export default {
   }
   .nav-menu__sub {
     position: absolute;
-    list-style: none;
     padding: 10px;
     background: rgba(255, 255, 255, .8);
     opacity: 0;
     z-index: -1;
-    transition: opacity .3s ease-in-out;
+    transition: opacity .3s ease-in-out, z-index .3s ease-in-out;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+    margin-bottom: 0;
   }
   .nav-menu__sub:hover {
     opacity: 1;

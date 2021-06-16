@@ -69,59 +69,6 @@ html, body {
   margin: 0;
 }
 
-form {
-  margin-top: 1rem;
-}
-
-form label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-form input, form textarea {
-  min-width: 100%;
-  max-width: 100%;
-  margin-bottom: 1.5rem;
-  box-sizing: border-box;
-  border: 1px solid var(--accent-colour-2);
-  border-radius: 5px;
-  font-family: Asap, Helvetica, Arial, sans-serif;
-  padding: 5px;
-  font-size: 16px;
-}
-
-form textarea {
-  min-height: 90px;
-  max-height: 90px;
-}
-
-form .half {
-  min-width: 100%;
-  max-width: 100%;
-  display: block;
-  margin: 0;
-}
-
-form .button {
-  margin: auto;
-  display: block;
-}
-
-.form-circles { position: relative; }
-.form-circles:before {
-  content: '';
-  position: absolute;
-  bottom: -25px;
-  right: -50px;
-  background-image: url(./assets/images/circles-wide.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 400px;
-  height: 150px;
-  max-width: 100%;
-  z-index: -1;
-}
-
 .container {
   display: grid;
   grid-template-columns: [leftbar] 1rem [content] 1fr [rightbar] 1rem;
@@ -243,11 +190,6 @@ input {
 @media screen and (min-width: 600px) {
   .container {
     padding: 0 30px;
-  }
-  form .half {
-    min-width: calc(50% - 5px);
-    max-width: calc(50% - 5px);
-    display: inline-block;
   }
   :not(.half) + .half { margin-right: 5px; }
   .half + .half { margin-left: 5px; }

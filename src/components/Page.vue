@@ -14,20 +14,25 @@
   </article>
   <article class="article columns" v-if="page.acf && page.acf.form_content">
     <div class="column" v-html="pageHtml" v-if="pageHtml"></div>
-    <div class="column" v-html="page.acf.form_content"></div>
+    <div class="column" v-if="page.acf.form_content">
+      <MembershipForm v-if="page.acf.form_content === 'membership'" />
+      <SignupForm v-if="page.acf.form_content === 'signup'" />
+    </div>
   </article>
 </template>
 
 <script>
 import router from '../router'
 import Events from './Events.vue'
+import MembershipForm from './MembershipForm.vue'
+import SignupForm from './SignupForm.vue'
 
 export default {
   name: 'Page',
   props: {
     pages: Array
   },
-  components: { Events },
+  components: { Events, MembershipForm, SignupForm },
   data() {
     return {
       page: {},
