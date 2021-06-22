@@ -70,6 +70,7 @@ html, body {
 }
 
 .container {
+  position: relative;
   display: grid;
   grid-template-columns: [leftbar] 1rem [content] 1fr [rightbar] 1rem;
 }

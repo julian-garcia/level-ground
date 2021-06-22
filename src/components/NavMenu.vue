@@ -1,15 +1,16 @@
 <template>
-  <ul class="nav-menu" :class="{show: showMenu}" @click="showMenu = false">
+  <ul class="nav-menu" :class="{show: showMenu}">
     <li class="nav-menu__item" v-for="item in menuItems" :key="item.ID">
-      <router-link :to="item.slug">{{item.title}}</router-link>
+      <router-link :to="item.slug" @click="showMenu = false">{{item.title}}</router-link>
       <ul class="nav-menu__sub" v-if="item.submenu.length">
         <li v-for="item in item.submenu" :key="item.ID">
-          <router-link :to="item.slug">{{item.title}}</router-link>
+          <router-link :to="item.slug" @click="showMenu = false">{{item.title}}</router-link>
         </li>
       </ul>
     </li>
   </ul>
-  <img src="../assets/images/hamburger.svg" alt="" @click="showMenu = !showMenu" class="toggle-menu">
+  <img src="../assets/images/hamburger.svg" alt="" @click="showMenu = true" class="toggle-menu" v-if="!showMenu">
+  <img src="../assets/images/close.svg" alt="" @click="showMenu = false" class="close-menu" v-if="showMenu">
 </template>
 
 <script>
@@ -74,8 +75,10 @@ export default {
   padding: 1rem 2rem;
   z-index: 9;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow-y: auto;
   background: rgba(255, 255, 255, .9);
+  box-sizing: border-box;
 }
 
 .nav-menu.show .nav-menu__item a { 
@@ -98,6 +101,18 @@ export default {
   top: 1rem;
   padding: 1rem;
   cursor: pointer;
+  z-index: 9;
+}
+
+.close-menu {
+  position: fixed;
+  display: block;
+  right: 1rem;
+  top: 0;
+  padding: 1rem;
+  cursor: pointer;
+  z-index: 9;
+  width: 30px;
 }
 
 @media screen and (min-width: 900px) {
