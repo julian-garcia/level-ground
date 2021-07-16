@@ -3,43 +3,67 @@
     <ul>
       <li class="signup__field left">
         <label for="firstname">First Name *</label>
-        <input type="text" name="firstname" v-model="firstName" @keyup="validateFirstName">
+        <input
+          type="text"
+          name="firstname"
+          v-model="firstName"
+          @keyup="validateFirstName"
+        />
         <p v-if="firstNameError" class="error">{{ firstNameError }}</p>
       </li>
       <li class="signup__field right">
         <label for="lastname">Last Name *</label>
-        <input type="text" name="lastname" v-model="lastName" @keyup="validateLastName">
+        <input
+          type="text"
+          name="lastname"
+          v-model="lastName"
+          @keyup="validateLastName"
+        />
         <p v-if="lastNameError" class="error">{{ lastNameError }}</p>
       </li>
       <li class="signup__field left">
         <label for="pronouns">Pronouns</label>
-        <input type="text" name="pronouns" v-model="pronouns">
+        <input type="text" name="pronouns" v-model="pronouns" />
       </li>
       <li class="signup__field right">
         <label for="phone">Phone *</label>
-        <input type="text" name="phone" v-model="phone" @keyup="validatePhone">
+        <input
+          type="text"
+          name="phone"
+          v-model="phone"
+          @keyup="validatePhone"
+        />
         <p v-if="phoneError" class="error">{{ phoneError }}</p>
       </li>
       <li class="signup__field">
         <label for="email">Email *</label>
-        <input type="email" name="email" v-model="email" @keyup="validateEmail">
+        <input
+          type="email"
+          name="email"
+          v-model="email"
+          @keyup="validateEmail"
+        />
         <p v-if="emailError" class="error">{{ emailError }}</p>
       </li>
       <li class="signup__field left">
         <label for="website">Website</label>
-        <input type="text" name="website" v-model="website">
+        <input type="text" name="website" v-model="website" />
       </li>
       <li class="signup__field right">
         <label for="instagram">Instagram Handle</label>
-        <input type="text" name="instagram" v-model="instagram">
+        <input type="text" name="instagram" v-model="instagram" />
       </li>
       <li class="signup__field">
-        <label for="practice">How would you describe your artistic practice? *</label>
+        <label for="practice"
+          >How would you describe your artistic practice? *</label
+        >
         <textarea name="practice" v-model="practice"></textarea>
         <p v-if="practiceError" class="error">{{ practiceError }}</p>
       </li>
       <li class="signup__field">
-        <label for="why-join">Why are you interested in joining the collective? *</label>
+        <label for="why-join"
+          >Why are you interested in joining the collective? *</label
+        >
         <textarea name="why-join" v-model="whyJoin"></textarea>
         <p v-if="whyJoinError" class="error">{{ whyJoinError }}</p>
       </li>
@@ -54,65 +78,98 @@
 </template>
 
 <script>
+const client = require("@mailchimp/mailchimp_marketing");
+async function subscribeUser() {
+  const response = await client.lists.addListMember(
+    `${process.env.VUE_APP_MAILCHIMP_LISTID}`,
+    {
+      email_address: "julian.garcia.leoni@gmail.com",
+      status: "pending",
+    }
+  );
+  console.log(response);
+}
+
+client.setConfig({
+  apiKey: `${process.env.VUE_APP_MAILCHIMP_APIKEY}`,
+  server: "us10",
+});
+
 export default {
   data() {
     return {
-      firstName: '',
-      firstNameError: '',
-      lastName: '',
-      lastNameError: '',
-      phone: '',
-      phoneError: '',
-      email: '',
-      emailError: '',
-      formValid: false
-    }
+      firstName: "",
+      firstNameError: "",
+      lastName: "",
+      lastNameError: "",
+      phone: "",
+      phoneError: "",
+      email: "",
+      emailError: "",
+      formValid: false,
+    };
   },
   methods: {
     signup() {
-      this.validateFirstName()
-      this.validateLastName()
-      this.validatePhone()
-      this.validateEmail()
-      this.formValid = !this.firstNameError && !this.lastNameError && 
-        !this.emailError && !this.phoneError;
+      this.validateFirstName();
+      this.validateLastName();
+      this.validatePhone();
+      this.validateEmail();
+      this.formValid =
+        !this.firstNameError &&
+        !this.lastNameError &&
+        !this.emailError &&
+        !this.phoneError;
       if (this.formValid) {
-        alert(JSON.stringify(this.$data))
+        alert(JSON.stringify(this.$data));
+        subscribeUser()
+          .then((value) => {
+            console.log(value);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       }
     },
     validateFirstName() {
-      this.firstNameError = this.firstName.length > 0 ? '' : 'First name is required'
+      this.firstNameError =
+        this.firstName.length > 0 ? "" : "First name is required";
       if (!this.firstNameError) {
-        this.firstNameError = /^[a-zA-Z]+$/.test(this.firstName) ? '' : 'Letters only please'
+        this.firstNameError = /^[a-zA-Z]+$/.test(this.firstName)
+          ? ""
+          : "Letters only please";
       }
     },
     validateLastName() {
-      this.lastNameError = this.lastName.length > 0 ? '' : 'Last name is required'
+      this.lastNameError =
+        this.lastName.length > 0 ? "" : "Last name is required";
       if (!this.lastNameError) {
-        this.lastNameError = /^[a-zA-Z]+$/.test(this.lastName) ? '' : 'Letters only please'
+        this.lastNameError = /^[a-zA-Z]+$/.test(this.lastName)
+          ? ""
+          : "Letters only please";
       }
     },
     validatePhone() {
-      this.phoneError = this.phone.length > 0 ? '' : 'Phone is required'
+      this.phoneError = this.phone.length > 0 ? "" : "Phone is required";
       if (!this.phoneError) {
-        this.phoneError = /^\d+$/.test(this.phone) ? '' : 'Numbers only please'
+        this.phoneError = /^\d+$/.test(this.phone) ? "" : "Numbers only please";
       }
     },
     validateEmail() {
-      this.emailError = this.email.length > 0 ? '' : 'Email is required'
+      this.emailError = this.email.length > 0 ? "" : "Email is required";
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-form { 
-  position: relative; 
+form {
+  position: relative;
   margin-bottom: 2rem;
 }
 
 form:before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -25px;
   right: -50px;
@@ -141,7 +198,8 @@ form label {
   margin-bottom: 10px;
 }
 
-form input, form textarea {
+form input,
+form textarea {
   min-width: 100%;
   max-width: 100%;
   margin-bottom: 2.5rem;
@@ -159,7 +217,8 @@ form textarea {
   max-height: 90px;
 }
 
-form .left, form .right {
+form .left,
+form .right {
   min-width: 100%;
   max-width: 100%;
   display: block;
@@ -195,11 +254,11 @@ form .signup__field.right .error {
     padding: 0 0 0 5px;
   }
 
-  form .left, form .right {
+  form .left,
+  form .right {
     min-width: calc(50% - 5px);
     max-width: calc(50% - 5px);
     display: inline-block;
   }
-
 }
 </style>
