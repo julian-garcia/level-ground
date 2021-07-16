@@ -1,7 +1,10 @@
 <template v-if="page">
-  <h1 class="article-title" v-if="page.post_title">{{page.post_title}}</h1>
-  <hr>
-  <article class="article" v-if="(page && !page.acf) || (page.acf && !page.acf.form_content)">
+  <h1 class="article-title" v-if="page.post_title">{{ page.post_title }}</h1>
+  <hr />
+  <article
+    class="article"
+    v-if="(page && !page.acf) || (page.acf && !page.acf.form_content)"
+  >
     <div class="left">
       <p v-html="page.acf.headline" v-if="page.acf" class="headline"></p>
     </div>
@@ -22,56 +25,61 @@
 </template>
 
 <script>
-import router from '../router'
-import Events from './Events.vue'
-import MembershipForm from './MembershipForm.vue'
-import SignupForm from './SignupForm.vue'
+import router from "../router";
+import Events from "./Events.vue";
+import MembershipForm from "./MembershipForm.vue";
+import SignupForm from "./SignupForm.vue";
 
 export default {
-  name: 'Page',
+  name: "Page",
   props: {
-    pages: Array
+    pages: Array,
   },
   components: { Events, MembershipForm, SignupForm },
   data() {
     return {
       page: {},
       events: [],
-      itemText: ''
-    }
+      itemText: "",
+    };
   },
-  created(){
+  created() {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/page/${this.$route.params.slug}`)
       .then((r) => r.json())
       .then((res) => {
-        this.page = res; 
+        this.page = res;
         if (!this.page.content) {
-          this.page.content = `<h2 style="text-align: center">Under construction</h2>`
+          this.page.content = `<h2 style="text-align: center">Under construction</h2>`;
         }
-        this.pageHtml = this.page.content; 
+        this.pageHtml = this.page.content;
+        document.title = `Level Ground - ${this.page.post_title}`;
       })
-      .catch(() => router.push({path: `/404`}));
+      .catch(() => router.push({ path: `/404` }));
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)
       .then((r) => r.json())
-      .then((res) => {this.events = res;});
+      .then((res) => {
+        this.events = res;
+      });
   },
   methods: {
     goToEvent(url) {
-      router.push({path: `/event/${url}`})
-    }
-  }
-}
+      router.push({ path: `/event/${url}` });
+    },
+  },
+};
 </script>
 
 <style scoped>
-.article { 
-  margin: 0; 
+.article {
+  margin: 0;
   display: grid;
   grid-template-columns: auto;
   gap: 2rem;
 }
 
-.article-title {text-align: center;}
+.article-title {
+  text-align: center;
+}
 
 .article:deep(iframe) {
   max-width: 100%;
@@ -97,7 +105,7 @@ export default {
   line-height: 1.5;
 }
 
-.article :deep(li>*) {
+.article :deep(li > *) {
   display: inline-block;
 }
 
@@ -107,11 +115,19 @@ export default {
 }
 
 .article :deep(li:nth-child(odd)) {
-  background: linear-gradient(90deg, var(--highlight-colour-muted) 0%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    var(--highlight-colour-muted) 0%,
+    transparent 100%
+  );
 }
 
 .article :deep(li:nth-child(even)) {
-  background: linear-gradient(90deg, var(--highlight-colour-light) 0%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    var(--highlight-colour-light) 0%,
+    transparent 100%
+  );
 }
 
 .article :deep(li::before) {
@@ -124,15 +140,15 @@ export default {
   line-height: 1;
 }
 
-.article :deep(ul>li::before) {
-  content: '◍'
+.article :deep(ul > li::before) {
+  content: "◍";
 }
 
-.article :deep(ol>li) {
+.article :deep(ol > li) {
   counter-increment: list-counter;
 }
 
-.article :deep(ol>li::before) {
+.article :deep(ol > li::before) {
   content: counter(list-counter);
 }
 
@@ -156,7 +172,9 @@ export default {
   max-width: 400px;
 }
 
-.event {cursor: pointer;}
+.event {
+  cursor: pointer;
+}
 .event-date {
   color: var(--highlight-colour);
 }

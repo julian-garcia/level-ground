@@ -11,6 +11,7 @@ const routes = [
     path: "/",
     name: "HomePage",
     component: HomePage,
+    meta: {title: 'Home'}
   },
   {
     path: "/article/:slug",
@@ -32,11 +33,13 @@ const routes = [
     name: "Events",
     path: "/events",
     component: Grid,
+    meta: {title: 'Events'}
   },
   {
     name: "News",
     path: "/news",
     component: Grid,
+    meta: {title: 'News & Stories'}
   },
   {
     path: "/404",
@@ -48,6 +51,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title === 'Home'
+      ? 'Level Ground'
+      : `Level Ground - ${to.meta.title}`;
+  }
+  next();
 });
 
 export default router;

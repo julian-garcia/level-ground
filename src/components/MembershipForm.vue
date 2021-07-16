@@ -1,43 +1,64 @@
 <template>
-  <form class="membership" @submit.prevent="onSubmit">
+  <iframe
+    src="https://donorbox.org/embed/level-ground-membership"
+    name="donorbox"
+    allowpaymentrequest=""
+    seamless="seamless"
+    frameborder="0"
+    scrolling="no"
+    height="900px"
+    width="100%"
+    style="max-width: 500px; min-width: 250px; max-height: none !important"
+  ></iframe>
+  <!-- <form class="membership" @submit.prevent="onSubmit">
     <ul>
       <li class="membership__option">
-        <input type="radio" name="membership" value="5" v-model="membership">
+        <input type="radio" name="membership" value="5" v-model="membership" />
         <label for="membership">
           <span class="option-value">$5</span>
           <span class="option-title">Friend</span>
         </label>
       </li>
       <li class="membership__option">
-        <input type="radio" name="membership" value="10" v-model="membership">
+        <input type="radio" name="membership" value="10" v-model="membership" />
         <label for="membership">
           <span class="option-value">$10</span>
           <span class="option-title">Fan</span>
         </label>
       </li>
       <li class="membership__option">
-        <input type="radio" name="membership" value="25" v-model="membership">
+        <input type="radio" name="membership" value="25" v-model="membership" />
         <label for="membership">
           <span class="option-value">$25</span>
           <span class="option-title">Supporter</span>
         </label>
       </li>
       <li class="membership__option">
-        <input type="radio" name="membership" value="50" v-model="membership">
+        <input type="radio" name="membership" value="50" v-model="membership" />
         <label for="membership">
           <span class="option-value">$50</span>
           <span class="option-title">Collaborator</span>
         </label>
       </li>
       <li class="membership__option">
-        <input type="radio" name="membership" value="100" v-model="membership">
+        <input
+          type="radio"
+          name="membership"
+          value="100"
+          v-model="membership"
+        />
         <label for="membership">
           <span class="option-value">$100</span>
           <span class="option-title">Patron</span>
         </label>
       </li>
       <li class="membership__option">
-        <input type="radio" name="membership" value="250" v-model="membership">
+        <input
+          type="radio"
+          name="membership"
+          value="250"
+          v-model="membership"
+        />
         <label for="membership">
           <span class="option-value">$250</span>
           <span class="option-title">Producer</span>
@@ -45,34 +66,34 @@
       </li>
     </ul>
     <button class="button">Next</button>
-  </form>
+  </form> -->
 </template>
 
 <script>
 export default {
   data() {
     return {
-      membership: ''
-    }
+      membership: "",
+    };
   },
   methods: {
     onSubmit() {
       if (this.$data.membership) {
-        alert(JSON.stringify(this.$data))
+        alert(JSON.stringify(this.$data));
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-form { 
-  position: relative; 
+form {
+  position: relative;
   margin-bottom: 2rem;
 }
 
 form:before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -25px;
   left: 50%;
@@ -97,13 +118,13 @@ form.membership li.membership__option {
   font-size: 16px;
   background: white;
 }
-form.membership ul>li.membership__option {
+form.membership ul > li.membership__option {
   padding: 0;
   position: relative;
   font-weight: bold;
 }
 
-form.membership ul>li.membership__option input {
+form.membership ul > li.membership__option input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -112,7 +133,7 @@ form.membership ul>li.membership__option input {
   box-sizing: border-box;
 }
 
-form.membership ul>li.membership__option label {
+form.membership ul > li.membership__option label {
   margin: 0;
   cursor: pointer;
   width: 100%;
@@ -122,7 +143,7 @@ form.membership ul>li.membership__option label {
   box-sizing: border-box;
 }
 
-form.membership ul>li.membership__option input:checked + label {
+form.membership ul > li.membership__option input:checked + label {
   color: white;
   background: var(--highlight-colour);
   box-sizing: border-box;
@@ -130,7 +151,7 @@ form.membership ul>li.membership__option input:checked + label {
   border-radius: 5px;
 }
 
-form.membership ul>li.membership__option::before {
+form.membership ul > li.membership__option::before {
   content: none;
 }
 .button {
