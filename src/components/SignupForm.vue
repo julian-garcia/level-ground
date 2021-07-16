@@ -78,22 +78,22 @@
 </template>
 
 <script>
-const client = require("@mailchimp/mailchimp_marketing");
-async function subscribeUser() {
-  const response = await client.lists.addListMember(
-    `${process.env.VUE_APP_MAILCHIMP_LISTID}`,
-    {
-      email_address: "julian.garcia.leoni@gmail.com",
-      status: "pending",
-    }
-  );
-  console.log(response);
-}
+// const client = require("@mailchimp/mailchimp_marketing");
+// async function subscribeUser() {
+//   const response = await client.lists.addListMember(
+//     `${process.env.VUE_APP_MAILCHIMP_LISTID}`,
+//     {
+//       email_address: "julian.garcia.leoni@gmail.com",
+//       status: "pending",
+//     }
+//   );
+//   console.log(response);
+// }
 
-client.setConfig({
-  apiKey: `${process.env.VUE_APP_MAILCHIMP_APIKEY}`,
-  server: "us10",
-});
+// client.setConfig({
+//   apiKey: `${process.env.VUE_APP_MAILCHIMP_APIKEY}`,
+//   server: "us10",
+// });
 
 export default {
   data() {
@@ -122,13 +122,13 @@ export default {
         !this.phoneError;
       if (this.formValid) {
         alert(JSON.stringify(this.$data));
-        subscribeUser()
-          .then((value) => {
-            console.log(value);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        // subscribeUser()
+        //   .then((value) => {
+        //     console.log(value);
+        //   })
+        //   .catch((err) => {
+        //     console.error(err);
+        //   });
       }
     },
     validateFirstName() {
