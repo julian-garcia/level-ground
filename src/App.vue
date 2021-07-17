@@ -118,7 +118,7 @@ a {
   font-weight: bold;
 }
 
-.button {
+.button, input[type="button"], input[type="submit"] {
   border-radius: 5px;
   border: none;
   background: var(--highlight-colour);

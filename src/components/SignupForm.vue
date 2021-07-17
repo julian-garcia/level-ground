@@ -1,100 +1,108 @@
 <template>
-  <form class="signup form-circles" @submit.prevent="signup">
-    <ul>
-      <li class="signup__field left">
-        <label for="firstname">First Name *</label>
-        <input
-          type="text"
-          name="firstname"
-          v-model="firstName"
-          @keyup="validateFirstName"
-        />
+  <form
+    ref="signupForm"
+    action="https://levelground.us10.list-manage.com/subscribe/post?u=91654b7b2f2c683f33e7f44a4&amp;id=eba597d9f6"
+    method="post"
+    id="mc-embedded-subscribe-form"
+    name="mc-embedded-subscribe-form"
+    class="signup form-circles"
+    novalidate
+    @submit.prevent="signup"
+    v-if="!formSubmitted"
+  >
+      <div class="mc-field-group signup__field left">
+        <label for="mce-FNAME">First Name </label>
+        <input type="text" name="FNAME" class="" id="mce-FNAME" @keyup="validateFirstName" v-model="firstName" />
         <p v-if="firstNameError" class="error">{{ firstNameError }}</p>
-      </li>
-      <li class="signup__field right">
-        <label for="lastname">Last Name *</label>
-        <input
-          type="text"
-          name="lastname"
-          v-model="lastName"
-          @keyup="validateLastName"
-        />
+      </div>
+      <div class="mc-field-group signup__field right">
+        <label for="mce-LNAME">Last Name </label>
+        <input type="text" name="LNAME" class="" id="mce-LNAME" @keyup="validateLastName" v-model="lastName" />
         <p v-if="lastNameError" class="error">{{ lastNameError }}</p>
-      </li>
-      <li class="signup__field left">
-        <label for="pronouns">Pronouns</label>
-        <input type="text" name="pronouns" v-model="pronouns" />
-      </li>
-      <li class="signup__field right">
-        <label for="phone">Phone *</label>
-        <input
-          type="text"
-          name="phone"
-          v-model="phone"
-          @keyup="validatePhone"
-        />
+      </div>
+      <div class="mc-field-group signup__field left">
+        <label for="mce-PRONOUNS">Pronouns </label>
+        <input type="text" name="PRONOUNS" id="mce-PRONOUNS" v-model="pronouns" @keyup="validatePronouns" />
+        <p v-if="pronounsError" class="error">{{ pronounsError }}</p>
+      </div>
+      <div class="mc-field-group signup__field right">
+        <label for="mce-PHONE">Phone </label>
+        <input type="text" name="PHONE" id="mce-PHONE" @keyup="validatePhone" v-model="phone" />
         <p v-if="phoneError" class="error">{{ phoneError }}</p>
-      </li>
-      <li class="signup__field">
-        <label for="email">Email *</label>
+      </div>
+      <div class="mc-field-group signup__field">
+        <label for="mce-EMAIL">Email Address </label>
         <input
           type="email"
-          name="email"
+          name="EMAIL"
+          id="mce-EMAIL"
           v-model="email"
           @keyup="validateEmail"
         />
         <p v-if="emailError" class="error">{{ emailError }}</p>
-      </li>
-      <li class="signup__field left">
-        <label for="website">Website</label>
-        <input type="text" name="website" v-model="website" />
-      </li>
-      <li class="signup__field right">
-        <label for="instagram">Instagram Handle</label>
-        <input type="text" name="instagram" v-model="instagram" />
-      </li>
-      <li class="signup__field">
-        <label for="practice"
-          >How would you describe your artistic practice? *</label
-        >
-        <textarea name="practice" v-model="practice"></textarea>
-        <p v-if="practiceError" class="error">{{ practiceError }}</p>
-      </li>
-      <li class="signup__field">
-        <label for="why-join"
-          >Why are you interested in joining the collective? *</label
-        >
-        <textarea name="why-join" v-model="whyJoin"></textarea>
-        <p v-if="whyJoinError" class="error">{{ whyJoinError }}</p>
-      </li>
-      <li class="signup__field">
-        <label for="hear">How did you hear about Level Ground? *</label>
-        <textarea name="hear" v-model="hear"></textarea>
-        <p v-if="hearError" class="error">{{ hearError }}</p>
-      </li>
-    </ul>
-    <button type="submit" class="button">Sign Up</button>
+      </div>
+      <div class="mc-field-group signup__field left">
+        <label for="mce-LINK">Website </label>
+        <input type="text" name="LINK" id="mce-LINK" v-model="website" />
+      </div>
+      <div class="mc-field-group signup__field right">
+        <label for="mce-INSTAGRAM">Instagram Handle </label>
+        <input
+          type="text"
+          name="INSTAGRAM"
+          id="mce-INSTAGRAM"
+          v-model="instagram"
+        />
+      </div>
+      <div class="mc-field-group signup__field">
+        <label for="mce-HEARABOUT">How did you hear about Level Ground? </label>
+        <textarea name="HEARABOUT" id="mce-HEARABOUT" v-model="hearAbout"></textarea>
+      </div>
+      <div class="mc-field-group signup__field">
+        <label for="mce-PRACTICE"
+          >How do you describe your artistic practice?
+        </label>
+        <textarea name="PRACTICE" id="mce-PRACTICE" v-model="practice"></textarea>
+      </div>
+      <div class="mc-field-group signup__field">
+        <label for="mce-INTERESTED"
+          >Why are you interested in joining the collective?
+        </label>
+        <textarea name="INTERESTED" id="mce-INTERESTED" v-model="whyJoin"></textarea>
+      </div>
+      <div id="mce-responses" class="clear">
+        <div
+          class="response"
+          id="mce-error-response"
+          style="display: none"
+        ></div>
+        <div
+          class="response"
+          id="mce-success-response"
+          style="display: none"
+        ></div>
+      </div>
+      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+      <div style="position: absolute; left: -5000px" aria-hidden="true">
+        <input
+          type="text"
+          name="b_91654b7b2f2c683f33e7f44a4_eba597d9f6"
+          tabindex="-1"
+          value=""
+        />
+      </div>
+      <input
+        type="submit"
+        value="Sign Up"
+        name="subscribe"
+        id="mc-embedded-subscribe"
+        class="button"
+      />
   </form>
+  <h2 v-if="formSubmitted">Thanks! You will now be taken to Mailchimp to confirm your details.</h2>
 </template>
 
 <script>
-// const client = require("@mailchimp/mailchimp_marketing");
-// async function subscribeUser() {
-//   const response = await client.lists.addListMember(
-//     `${process.env.VUE_APP_MAILCHIMP_LISTID}`,
-//     {
-//       email_address: "julian.garcia.leoni@gmail.com",
-//       status: "pending",
-//     }
-//   );
-//   console.log(response);
-// }
-
-// client.setConfig({
-//   apiKey: `${process.env.VUE_APP_MAILCHIMP_APIKEY}`,
-//   server: "us10",
-// });
-
 export default {
   data() {
     return {
@@ -106,7 +114,10 @@ export default {
       phoneError: "",
       email: "",
       emailError: "",
+      pronouns: "",
+      pronounsError: "",
       formValid: false,
+      formSubmitted: false,
     };
   },
   methods: {
@@ -115,20 +126,16 @@ export default {
       this.validateLastName();
       this.validatePhone();
       this.validateEmail();
+      this.validatePronouns();
       this.formValid =
         !this.firstNameError &&
         !this.lastNameError &&
         !this.emailError &&
         !this.phoneError;
       if (this.formValid) {
-        alert(JSON.stringify(this.$data));
-        // subscribeUser()
-        //   .then((value) => {
-        //     console.log(value);
-        //   })
-        //   .catch((err) => {
-        //     console.error(err);
-        //   });
+        this.$refs.signupForm.submit();
+        this.$refs.signupForm.reset();
+        this.formSubmitted = true;
       }
     },
     validateFirstName() {
@@ -158,6 +165,9 @@ export default {
     validateEmail() {
       this.emailError = this.email.length > 0 ? "" : "Email is required";
     },
+    validatePronouns() {
+      this.pronounsError = this.pronouns.length > 0 ? "" : "Pronouns is required";
+    },
   },
 };
 </script>
@@ -182,14 +192,14 @@ form:before {
   z-index: -1;
 }
 
-form.signup li.signup__field {
+form.signup .signup__field {
   background: none;
   border: none;
   padding: 0;
   position: relative;
 }
 
-form.signup li.signup__field::before {
+form.signup .signup__field::before {
   content: none;
 }
 
@@ -198,7 +208,7 @@ form label {
   margin-bottom: 10px;
 }
 
-form input,
+form input:not([type='submit']),
 form textarea {
   min-width: 100%;
   max-width: 100%;
@@ -246,11 +256,11 @@ form .signup__field.right .error {
 }
 
 @media screen and (min-width: 1250px) {
-  form.signup li.signup__field.left {
+  form.signup .signup__field.left {
     padding: 0 5px 0 0;
   }
 
-  form.signup li.signup__field.right {
+  form.signup .signup__field.right {
     padding: 0 0 0 5px;
   }
 
