@@ -27,7 +27,7 @@ export default {
 <style scoped>
 .modal {
   position: fixed;
-  width: auto;
+  width: 100%;
   min-height: 400px;
   max-width: 100%;
   max-height: 100%;
@@ -62,5 +62,17 @@ export default {
   right: 20px;
   cursor: pointer;
   z-index: 9;
+}
+
+@media screen and (min-width: 600px) {
+  .modal {
+    width: 500px;
+  }
+}
+
+@media screen and (min-width: 1250px) {
+  .modal {
+    width: auto;
+  }
 }
 </style>

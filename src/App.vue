@@ -17,7 +17,7 @@
   <Footer />
   <Modal v-if="showModal === 'give'" @showModal="onHideModal">
     <h2>Support Our Artists</h2>
-    <p style="max-width: 400px">
+    <p style="max-width: 400px; margin: auto">
       Any amount makes a difference to supporting our artists and enhancing our
       community.
     </p>
@@ -30,7 +30,7 @@
       scrolling="no"
       height="400px"
       width="100%"
-      style="max-width: 500px; min-width: 250px; max-height: none !important"
+      style="max-height: none !important"
     ></iframe>
     <p>
       <router-link to="/membership">Become a member</router-link> by setting up
@@ -210,6 +210,12 @@ input {
   font-family: Playfair;
   font-weight: bold;
   font-size: 1.2rem;
+}
+
+iframe {
+  display: block;
+  margin: 1rem auto 0;
+  max-width: 400px;
 }
 
 @font-face {

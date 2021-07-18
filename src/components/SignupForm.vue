@@ -234,7 +234,7 @@ form .signup__field.right .error {
   padding: 0 0 0 5px;
 }
 
-@media screen and (min-width: 1250px) {
+@media screen and (min-width: 600px) {
   form.signup .signup__field.left {
     padding: 0 5px 0 0;
   }
