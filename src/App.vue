@@ -1,48 +1,91 @@
 <template>
-  <Header />
+  <Header @showModal="onShowModal" />
   <div class="container">
     <div class="leftbar"></div>
     <div class="content">
-      <hr>
-      <router-view :posts="posts" :pages="pages" :events="events" :key="$route.path" />
-      <hr class="square">
+      <hr />
+      <router-view
+        :posts="posts"
+        :pages="pages"
+        :events="events"
+        :key="$route.path"
+      />
+      <hr class="square" />
     </div>
     <div class="rightbar"></div>
   </div>
   <Footer />
+  <Modal v-if="showModal === 'give'" @showModal="onHideModal">
+    <h2>Support Our Artists</h2>
+    <p style="max-width: 400px">
+      Any amount makes a difference to supporting our artists and enhancing our
+      community.
+    </p>
+    <iframe
+      src="https://donorbox.org/embed/level-ground-website-donation"
+      name="donorbox"
+      allowpaymentrequest=""
+      seamless="seamless"
+      frameborder="0"
+      scrolling="no"
+      height="400px"
+      width="100%"
+      style="max-width: 500px; min-width: 250px; max-height: none !important"
+    ></iframe>
+    <p>
+      <router-link to="/membership">Become a member</router-link> by setting up
+      a recurring donation.
+    </p>
+  </Modal>
+  <Modal v-if="showModal === 'subscribe'" @showModal="onHideModal">
+    <SignupForm />
+  </Modal>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
-import '@csstools/normalize.css'
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import Modal from "./components/Modal.vue";
+import SignupForm from "./components/SignupForm.vue";
+import "@csstools/normalize.css";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
-    Footer
+    Footer,
+    Modal,
+    SignupForm,
   },
-  data () {
+  data() {
     return {
       posts: [],
       pages: [],
       events: [],
-      name: this.$route.path
-    }
+      name: this.$route.path,
+      showModal: false,
+    };
   },
-  mounted(){
+  mounted() {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/post`)
       .then((r) => r.json())
-      .then((res) => this.posts = res);
+      .then((res) => (this.posts = res));
     fetch(`${process.env.VUE_APP_CMS_URL}/wp/v2/pages`)
       .then((r) => r.json())
-      .then((res) => this.pages = res);
+      .then((res) => (this.pages = res));
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)
       .then((r) => r.json())
-      .then((res) => this.events = res);
-  }
-}
+      .then((res) => (this.events = res));
+  },
+  methods: {
+    onShowModal(modalType) {
+      this.showModal = modalType;
+    },
+    onHideModal() {
+      this.showModal = false;
+    },
+  },
+};
 </script>
 
 <style>
@@ -63,7 +106,8 @@ export default {
   --button-font-size: 20px;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
@@ -90,19 +134,26 @@ html, body {
   max-width: 1350px;
 }
 
-p { line-height: 1.6rem; font-size: 1.1rem; }
-h1, h2, h3 { font-family: Playfair; }
-hr { 
-  border: none; 
-  height: 1px; 
-  background: var(--highlight-colour-muted); 
+p {
+  line-height: 1.6rem;
+  font-size: 1.1rem;
+}
+h1,
+h2,
+h3 {
+  font-family: Playfair;
+}
+hr {
+  border: none;
+  height: 1px;
+  background: var(--highlight-colour-muted);
   position: relative;
   overflow: visible;
   margin: 1rem 0;
 }
 
 hr.square::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -10px;
   right: -30px;
@@ -113,18 +164,20 @@ hr.square::after {
 }
 
 a {
-  text-decoration: none; 
+  text-decoration: none;
   color: var(--highlight-colour);
   font-weight: bold;
 }
 
-.button, input[type="button"], input[type="submit"] {
+.button,
+input[type="button"],
+input[type="submit"] {
   border-radius: 5px;
   border: none;
   background: var(--highlight-colour);
   color: white;
   min-width: 100px;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: var(--button-font-size);
   font-family: Asap;
   font-weight: normal;
@@ -146,7 +199,7 @@ a {
 input {
   border-radius: 5px;
   border: 1px solid var(--highlight-colour-muted);
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: var(--button-font-size);
   font-family: Asap;
 }
@@ -162,25 +215,25 @@ input {
 @font-face {
   font-family: "Asap";
   src: url("./assets/fonts/Asap-Regular.woff2") format("woff2"),
-       url("./assets/fonts/Asap-Regular.woff") format("woff");
+    url("./assets/fonts/Asap-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "Playfair";
   src: url("./assets/fonts/PlayfairDisplay.woff2") format("woff2"),
-       url("./assets/fonts/PlayfairDisplay.woff") format("woff");
+    url("./assets/fonts/PlayfairDisplay.woff") format("woff");
 }
 @font-face {
   font-family: "Playfair";
   font-style: italic;
   src: url("./assets/fonts/PlayfairDisplay-Italic.woff2") format("woff2"),
-       url("./assets/fonts/PlayfairDisplay-Italic.woff") format("woff");
+    url("./assets/fonts/PlayfairDisplay-Italic.woff") format("woff");
 }
 @font-face {
   font-family: "Playfair";
   font-style: italic;
   font-weight: bold;
   src: url("./assets/fonts/PlayfairDisplay-BoldItalic.woff2") format("woff2"),
-       url("./assets/fonts/PlayfairDisplay-BoldItalic.woff") format("woff");
+    url("./assets/fonts/PlayfairDisplay-BoldItalic.woff") format("woff");
 }
 @media screen and (min-width: 300px) {
   .container {
@@ -192,17 +245,21 @@ input {
   .container {
     padding: 0 30px;
   }
-  :not(.half) + .half { margin-right: 5px; }
-  .half + .half { margin-left: 5px; }
+  :not(.half) + .half {
+    margin-right: 5px;
+  }
+  .half + .half {
+    margin-left: 5px;
+  }
 }
 @media screen and (min-width: 900px) {
   .container {
-    grid-template-columns: [leftbar] .3fr [content] 3fr [rightbar] .3fr;
+    grid-template-columns: [leftbar] 0.3fr [content] 3fr [rightbar] 0.3fr;
   }
 }
 @media screen and (min-width: 1200px) {
   .container {
-    grid-template-columns: [leftbar] .2fr [content] 3fr [rightbar] .2fr;
+    grid-template-columns: [leftbar] 0.2fr [content] 3fr [rightbar] 0.2fr;
   }
 }
 @media screen and (min-width: 2000px) {

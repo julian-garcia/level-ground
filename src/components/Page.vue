@@ -19,7 +19,7 @@
     <div class="column" v-html="pageHtml" v-if="pageHtml"></div>
     <div class="column" v-if="page.acf.form_content">
       <MembershipForm v-if="page.acf.form_content === 'membership'" />
-      <SignupForm v-if="page.acf.form_content === 'signup'" />
+      <CollectiveForm v-if="page.acf.form_content === 'signup'" />
     </div>
   </article>
 </template>
@@ -28,14 +28,14 @@
 import router from "../router";
 import Events from "./Events.vue";
 import MembershipForm from "./MembershipForm.vue";
-import SignupForm from "./SignupForm.vue";
+import CollectiveForm from "./CollectiveForm.vue";
 
 export default {
   name: "Page",
   props: {
     pages: Array,
   },
-  components: { Events, MembershipForm, SignupForm },
+  components: { Events, MembershipForm, CollectiveForm },
   data() {
     return {
       page: {},

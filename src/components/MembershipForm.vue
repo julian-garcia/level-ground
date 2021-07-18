@@ -1,4 +1,18 @@
 <template>
+  <button
+    class="button"
+    @click="donationFrequency = 'monthly'"
+    :class="[donationFrequency === 'monthly' ? 'active' : 'inactive']"
+  >
+    Monthly
+  </button>
+  <button
+    class="button"
+    @click="donationFrequency = 'annually'"
+    :class="[donationFrequency === 'annually' ? 'active' : 'inactive']"
+  >
+    Annually
+  </button>
   <iframe
     src="https://donorbox.org/embed/level-ground-membership"
     name="donorbox"
@@ -9,6 +23,19 @@
     height="900px"
     width="100%"
     style="max-width: 500px; min-width: 250px; max-height: none !important"
+    v-if="donationFrequency === 'monthly'"
+  ></iframe>
+  <iframe
+    src="https://donorbox.org/embed/level-ground-membership-annual"
+    name="donorbox"
+    allowpaymentrequest=""
+    seamless="seamless"
+    frameborder="0"
+    scrolling="no"
+    height="900px"
+    width="100%"
+    style="max-width: 500px; min-width: 250px; max-height: none !important"
+    v-if="donationFrequency === 'annually'"
   ></iframe>
   <!-- <form class="membership" @submit.prevent="onSubmit">
     <ul>
@@ -74,6 +101,7 @@ export default {
   data() {
     return {
       membership: "",
+      donationFrequency: "monthly",
     };
   },
   methods: {
@@ -168,5 +196,12 @@ form.membership ul > li.membership__option::before {
 }
 input:checked + label .option-title {
   color: whitesmoke;
+}
+.button {
+  margin: 0 1rem 1rem 0;
+  display: inline-block;
+}
+.button.inactive {
+  background: var(--highlight-colour-muted);
 }
 </style>

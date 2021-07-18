@@ -1,7 +1,7 @@
 <template>
   <form
     ref="signupForm"
-    action="https://levelground.us10.list-manage.com/subscribe/post?u=91654b7b2f2c683f33e7f44a4&amp;id=95e2975d27"
+    action="https://levelground.us10.list-manage.com/subscribe/post?u=91654b7b2f2c683f33e7f44a4&amp;id=eba597d9f6"
     method="post"
     id="mc-embedded-subscribe-form"
     name="mc-embedded-subscribe-form"
@@ -14,6 +14,7 @@
       <input
         type="text"
         name="FNAME"
+        class=""
         id="mce-FNAME"
         @keyup="validateFirstName"
         v-model="firstName"
@@ -25,11 +26,34 @@
       <input
         type="text"
         name="LNAME"
+        class=""
         id="mce-LNAME"
         @keyup="validateLastName"
         v-model="lastName"
       />
       <p v-if="lastNameError" class="error">{{ lastNameError }}</p>
+    </div>
+    <div class="mc-field-group signup__field left">
+      <label for="mce-PRONOUNS">Pronouns </label>
+      <input
+        type="text"
+        name="PRONOUNS"
+        id="mce-PRONOUNS"
+        v-model="pronouns"
+        @keyup="validatePronouns"
+      />
+      <p v-if="pronounsError" class="error">{{ pronounsError }}</p>
+    </div>
+    <div class="mc-field-group signup__field right">
+      <label for="mce-PHONE">Phone </label>
+      <input
+        type="text"
+        name="PHONE"
+        id="mce-PHONE"
+        @keyup="validatePhone"
+        v-model="phone"
+      />
+      <p v-if="phoneError" class="error">{{ phoneError }}</p>
     </div>
     <div class="mc-field-group signup__field">
       <label for="mce-EMAIL">Email Address </label>
@@ -42,29 +66,42 @@
       />
       <p v-if="emailError" class="error">{{ emailError }}</p>
     </div>
-    <div class="mc-field-group signup__field">
-      <label for="mce-TITLE">Title </label>
-      <input type="text" name="TITLE" id="mce-TITLE" />
-    </div>
     <div class="mc-field-group signup__field left">
-      <label for="mce-ZIP">Zip Code </label>
-      <input type="text" name="ZIP" id="mce-ZIP" />
+      <label for="mce-LINK">Website </label>
+      <input type="text" name="LINK" id="mce-LINK" v-model="website" />
     </div>
     <div class="mc-field-group signup__field right">
-      <label for="mce-CITY">City </label>
-      <input type="text" name="CITY" id="mce-CITY" />
+      <label for="mce-INSTAGRAM">Instagram Handle </label>
+      <input
+        type="text"
+        name="INSTAGRAM"
+        id="mce-INSTAGRAM"
+        v-model="instagram"
+      />
     </div>
     <div class="mc-field-group signup__field">
-      <label for="mce-OUTLET">Outlet </label>
-      <input type="text" name="OUTLET" id="mce-OUTLET" />
+      <label for="mce-HEARABOUT">How did you hear about Level Ground? </label>
+      <textarea
+        name="HEARABOUT"
+        id="mce-HEARABOUT"
+        v-model="hearAbout"
+      ></textarea>
     </div>
-    <div class="mc-field-group signup__field left">
-      <label for="mce-TWITTER">Twitter </label>
-      <input type="text" name="TWITTER" id="mce-TWITTER" />
+    <div class="mc-field-group signup__field">
+      <label for="mce-PRACTICE"
+        >How do you describe your artistic practice?
+      </label>
+      <textarea name="PRACTICE" id="mce-PRACTICE" v-model="practice"></textarea>
     </div>
-    <div class="mc-field-group signup__field right">
-      <label for="mce-SOURCES">Sources </label>
-      <input type="text" name="SOURCES" id="mce-SOURCES" />
+    <div class="mc-field-group signup__field">
+      <label for="mce-INTERESTED"
+        >Why are you interested in joining the collective?
+      </label>
+      <textarea
+        name="INTERESTED"
+        id="mce-INTERESTED"
+        v-model="whyJoin"
+      ></textarea>
     </div>
     <div id="mce-responses" class="clear">
       <div class="response" id="mce-error-response" style="display: none"></div>
@@ -78,35 +115,39 @@
     <div style="position: absolute; left: -5000px" aria-hidden="true">
       <input
         type="text"
-        name="b_91654b7b2f2c683f33e7f44a4_95e2975d27"
+        name="b_91654b7b2f2c683f33e7f44a4_eba597d9f6"
         tabindex="-1"
         value=""
       />
     </div>
     <input
       type="submit"
-      value="Subscribe"
+      value="Sign Up"
       name="subscribe"
       id="mc-embedded-subscribe"
       class="button"
     />
   </form>
   <h2 v-if="validFormMessage">
-    Thanks! You will now be taken to <br />Mailchimp to confirm your details.
+    Thanks! You will now be taken to Mailchimp to confirm your details.
   </h2>
 </template>
 
 <script>
 export default {
-  name: "SignupForm",
+  name: "CollectiveForm",
   data() {
     return {
       firstName: "",
       firstNameError: "",
       lastName: "",
       lastNameError: "",
+      phone: "",
+      phoneError: "",
       email: "",
       emailError: "",
+      pronouns: "",
+      pronounsError: "",
       formValid: false,
       validFormMessage: false,
     };
@@ -115,9 +156,14 @@ export default {
     signup() {
       this.validateFirstName();
       this.validateLastName();
+      this.validatePhone();
       this.validateEmail();
+      this.validatePronouns();
       this.formValid =
-        !this.firstNameError && !this.lastNameError && !this.emailError;
+        !this.firstNameError &&
+        !this.lastNameError &&
+        !this.emailError &&
+        !this.phoneError;
       if (this.formValid) {
         this.validFormMessage = true;
         setTimeout(() => {
@@ -144,8 +190,18 @@ export default {
           : "Letters only please";
       }
     },
+    validatePhone() {
+      this.phoneError = this.phone.length > 0 ? "" : "Phone is required";
+      if (!this.phoneError) {
+        this.phoneError = /^\d+$/.test(this.phone) ? "" : "Numbers only please";
+      }
+    },
     validateEmail() {
       this.emailError = this.email.length > 0 ? "" : "Email is required";
+    },
+    validatePronouns() {
+      this.pronounsError =
+        this.pronouns.length > 0 ? "" : "Pronouns is required";
     },
   },
 };

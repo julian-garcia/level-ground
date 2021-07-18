@@ -1,26 +1,34 @@
 <template>
   <div class="header">
     <router-link to="/">
-      <img src="../assets/images/level-ground-logo.svg" alt="" class="logo">
+      <img src="../assets/images/level-ground-logo.svg" alt="" class="logo" />
     </router-link>
     <NavMenu />
     <div class="cta">
-      <a href="#">Subscribe</a>
+      <a href="#" @click="emitShowModal('subscribe')">Subscribe</a>
       <a href="#">Sign In</a>
-      <a href="#" class="give"><img src="../assets/images/give.svg" alt=""> Give</a>
+      <a href="#" class="give" @click="emitShowModal('give')"
+        ><img src="../assets/images/give.svg" alt="" /> Give</a
+      >
     </div>
   </div>
 </template>
 
 <script>
-import NavMenu from './NavMenu.vue'
+import NavMenu from "./NavMenu.vue";
 
 export default {
-  name: 'Header',
+  name: "Header",
+  emits: ["showModal"],
   components: {
-    NavMenu
-  }
-}
+    NavMenu,
+  },
+  methods: {
+    emitShowModal(modalType) {
+      this.$emit("showModal", modalType);
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -34,7 +42,9 @@ export default {
   max-width: 260px;
 }
 
-.give { position: relative; }
+.give {
+  position: relative;
+}
 .give img {
   position: absolute;
   width: 20px;
@@ -50,12 +60,14 @@ export default {
 }
 
 .cta a {
-  text-decoration: none; 
-  color: black; 
+  text-decoration: none;
+  color: black;
   padding: 0 1rem;
 }
 
 @media screen and (min-width: 900px) {
-  .cta { display: block; }
+  .cta {
+    display: block;
+  }
 }
 </style>
