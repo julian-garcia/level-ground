@@ -1,60 +1,72 @@
 <template>
   <template v-if="event.acf">
-    <div v-if="event.acf.featured_image" class="banner-image" :style='{backgroundImage: "url(" + event.acf.featured_image + ")"}'>
-      <h1 class="event-title">{{event.post_title}}</h1>
+    <div
+      v-if="event.acf.featured_image"
+      class="banner-image"
+      :style="{ backgroundImage: 'url(' + event.acf.featured_image + ')' }"
+    >
+      <h1 class="event-title">{{ event.post_title }}</h1>
     </div>
     <div v-if="!event.acf.featured_image" class="banner-image">
-      <h1 class="event-title">{{event.post_title}}</h1>
+      <h1 class="event-title">{{ event.post_title }}</h1>
     </div>
   </template>
   <article class="event">
     <div class="left">
       <template v-if="event.acf">
-        <p class="event-date">{{$filters.formatDate(event.acf.event_date) }}</p>
+        <p class="event-date">
+          {{ $filters.formatDate(event.acf.event_date) }}
+        </p>
         <p>{{ event.acf.event_time }}</p>
         <p>{{ event.acf.event_address }}</p>
-        <a class="button full-width" :href="`${event.acf.event_link}`" target="_blank">Attend this event</a>
+        <a
+          class="button full-width"
+          :href="`${event.acf.event_link}`"
+          target="_blank"
+          >Attend this event</a
+        >
         <button class="button full-width">Donate</button>
       </template>
     </div>
     <div>
-      <p>{{event.post_excerpt}}</p>
+      <p>{{ event.post_excerpt }}</p>
       <div v-html="eventHtml"></div>
     </div>
     <div class="right">
-      <Events :events="events.slice(0,5)" />
+      <Events :events="events.slice(0, 5)" />
     </div>
   </article>
 </template>
 
 <script>
-import router from '../router'
-import Events from './Events.vue'
+import router from "../router";
+import Events from "./Events.vue";
 
 export default {
-  name: 'Event',
+  name: "Event",
   props: {
-    events: Array
+    events: Array,
   },
   components: { Events },
   data() {
     return {
-      event: {}
-    }
+      event: {},
+    };
   },
-  created(){
+  created() {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event/${this.$route.params.slug}`)
       .then((r) => r.json())
       .then((res) => {
-        this.event = res; 
-        if (!this.event.content) { 
-          this.event.content = `<h2 style="text-align: center">Details to be confirmed</h2>`
+        this.event = res;
+        if (!this.event.content) {
+          this.event.content = `<h2 style="text-align: center">Details to be confirmed</h2>`;
         }
         this.eventHtml = this.event.content;
+        document.title = `Level Ground - ${this.event.post_title}`;
       })
-      .catch(() => router.push({path: `/404`}));
-  }
-}
+      .catch(() => router.push({ path: `/404` }));
+  },
+};
 </script>
 
 <style scoped>
@@ -101,5 +113,4 @@ export default {
     grid-template-columns: 1fr 2fr 1fr;
   }
 }
-
 </style>

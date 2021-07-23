@@ -118,7 +118,7 @@ export default {
   background: linear-gradient(
     90deg,
     var(--highlight-colour-muted) 0%,
-    transparent 100%
+    var(--background) 100%
   );
 }
 
@@ -126,7 +126,7 @@ export default {
   background: linear-gradient(
     90deg,
     var(--highlight-colour-light) 0%,
-    transparent 100%
+    var(--background) 100%
   );
 }
 

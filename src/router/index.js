@@ -5,6 +5,8 @@ import Event from "../components/Event.vue";
 import Grid from "../components/Grid.vue";
 import Page from "../components/Page.vue";
 import NotFound from "../components/NotFound.vue";
+import SignIn from "../components/SignIn.vue";
+import Members from "../components/Members.vue";
 
 const routes = [
   {
@@ -20,6 +22,11 @@ const routes = [
   {
     path: "/event/:slug",
     component: Event,
+  },
+  {
+    path: "/members",
+    component: Members,
+    meta: {title: 'Members'}
   },
   {
     path: "/:slug",
@@ -42,9 +49,16 @@ const routes = [
     meta: {title: 'News & Stories'}
   },
   {
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn,
+    meta: {title: 'Sign In'}
+  },
+  {
     path: "/404",
     name: "NotFound",
     component: NotFound,
+    meta: {title: 'Page not found'}
   }
 ];
 

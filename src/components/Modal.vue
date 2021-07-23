@@ -39,6 +39,7 @@ export default {
   padding: 2rem;
   overflow-y: scroll;
   box-sizing: border-box;
+  z-index: 9;
 }
 
 .modal-background {

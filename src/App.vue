@@ -98,6 +98,7 @@ export default {
 :root {
   background: #fff7f7;
   --background: #fff7f7;
+  --background-transparent: #fff7f7b2;
   --highlight-colour: #e5511b;
   --highlight-colour-muted: #ffe9e6;
   --highlight-colour-light: #fef2f0;
