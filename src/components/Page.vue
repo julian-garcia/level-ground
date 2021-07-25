@@ -15,9 +15,26 @@
       </div>
     </div>
   </article>
-  <article class="article columns" v-if="page.acf && page.acf.form_content">
+  <article
+    class="article columns"
+    v-if="page.acf && page.acf.form_content === 'contact'"
+  >
+    <div class="column">
+      <div v-html="pageHtml" v-if="pageHtml"></div>
+      <ContactForm />
+    </div>
+  </article>
+  <article
+    class="article columns"
+    v-if="
+      page.acf && page.acf.form_content && page.acf.form_content !== 'contact'
+    "
+  >
     <div class="column" v-html="pageHtml" v-if="pageHtml"></div>
-    <div class="column" v-if="page.acf.form_content">
+    <div
+      class="column"
+      v-if="page.acf.form_content && page.acf.form_content !== 'none'"
+    >
       <MembershipForm v-if="page.acf.form_content === 'membership'" />
       <CollectiveForm v-if="page.acf.form_content === 'signup'" />
     </div>
@@ -29,13 +46,14 @@ import router from "../router";
 import Events from "./Events.vue";
 import MembershipForm from "./MembershipForm.vue";
 import CollectiveForm from "./CollectiveForm.vue";
+import ContactForm from "./ContactForm.vue";
 
 export default {
   name: "Page",
   props: {
     pages: Array,
   },
-  components: { Events, MembershipForm, CollectiveForm },
+  components: { Events, MembershipForm, CollectiveForm, ContactForm },
   data() {
     return {
       page: {},
@@ -65,6 +83,7 @@ export default {
     goToEvent(url) {
       router.push({ path: `/event/${url}` });
     },
+    sendMessage() {},
   },
 };
 </script>
@@ -75,6 +94,12 @@ export default {
   display: grid;
   grid-template-columns: auto;
   gap: 2rem;
+}
+
+.article .column {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article-title {

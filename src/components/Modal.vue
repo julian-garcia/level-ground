@@ -65,6 +65,10 @@ export default {
   z-index: 9;
 }
 
+.modal :deep(iframe) {
+  margin: 1rem auto 0;
+}
+
 @media screen and (min-width: 600px) {
   .modal {
     width: 500px;

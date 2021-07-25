@@ -207,13 +207,13 @@ export default {
 };
 </script>
 
-<style scoped>
-form {
+<style>
+.content form {
   position: relative;
   margin-bottom: 2rem;
 }
 
-form:before {
+.content form:before {
   content: "";
   position: absolute;
   bottom: -25px;
@@ -227,24 +227,24 @@ form:before {
   z-index: -1;
 }
 
-form.signup .signup__field {
+.content form.signup .signup__field {
   background: none;
   border: none;
   padding: 0;
   position: relative;
 }
 
-form.signup .signup__field::before {
+.content form.signup .signup__field::before {
   content: none;
 }
 
-form label {
+.content form label {
   display: block;
   margin-bottom: 10px;
 }
 
-form input:not([type="submit"]),
-form textarea {
+.content form input:not([type="submit"]),
+.content form textarea {
   min-width: 100%;
   max-width: 100%;
   margin-bottom: 2.5rem;
@@ -257,25 +257,25 @@ form textarea {
   background: white;
 }
 
-form textarea {
+.content form textarea {
   min-height: 90px;
   max-height: 90px;
 }
 
-form .left,
-form .right {
+.content form .left,
+.content form .right {
   min-width: 100%;
   max-width: 100%;
   display: block;
   margin: 0;
 }
 
-form .button {
+.content form .button {
   margin: auto;
   display: block;
 }
 
-form .signup__field .error {
+.content form .signup__field .error {
   position: absolute;
   bottom: 15px;
   left: 0;
@@ -286,21 +286,21 @@ form .signup__field .error {
   font-weight: bold;
 }
 
-form .signup__field.right .error {
+.content form .signup__field.right .error {
   padding: 0 0 0 5px;
 }
 
 @media screen and (min-width: 1250px) {
-  form.signup .signup__field.left {
+  .content form.signup .signup__field.left {
     padding: 0 5px 0 0;
   }
 
-  form.signup .signup__field.right {
+  .content form.signup .signup__field.right {
     padding: 0 0 0 5px;
   }
 
-  form .left,
-  form .right {
+  .content form .left,
+  .content form .right {
     min-width: calc(50% - 5px);
     max-width: calc(50% - 5px);
     display: inline-block;

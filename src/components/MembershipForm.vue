@@ -37,63 +37,6 @@
     style="max-width: 500px; min-width: 250px; max-height: none !important"
     v-if="donationFrequency === 'annually'"
   ></iframe>
-  <!-- <form class="membership" @submit.prevent="onSubmit">
-    <ul>
-      <li class="membership__option">
-        <input type="radio" name="membership" value="5" v-model="membership" />
-        <label for="membership">
-          <span class="option-value">$5</span>
-          <span class="option-title">Friend</span>
-        </label>
-      </li>
-      <li class="membership__option">
-        <input type="radio" name="membership" value="10" v-model="membership" />
-        <label for="membership">
-          <span class="option-value">$10</span>
-          <span class="option-title">Fan</span>
-        </label>
-      </li>
-      <li class="membership__option">
-        <input type="radio" name="membership" value="25" v-model="membership" />
-        <label for="membership">
-          <span class="option-value">$25</span>
-          <span class="option-title">Supporter</span>
-        </label>
-      </li>
-      <li class="membership__option">
-        <input type="radio" name="membership" value="50" v-model="membership" />
-        <label for="membership">
-          <span class="option-value">$50</span>
-          <span class="option-title">Collaborator</span>
-        </label>
-      </li>
-      <li class="membership__option">
-        <input
-          type="radio"
-          name="membership"
-          value="100"
-          v-model="membership"
-        />
-        <label for="membership">
-          <span class="option-value">$100</span>
-          <span class="option-title">Patron</span>
-        </label>
-      </li>
-      <li class="membership__option">
-        <input
-          type="radio"
-          name="membership"
-          value="250"
-          v-model="membership"
-        />
-        <label for="membership">
-          <span class="option-value">$250</span>
-          <span class="option-title">Producer</span>
-        </label>
-      </li>
-    </ul>
-    <button class="button">Next</button>
-  </form> -->
 </template>
 
 <script>

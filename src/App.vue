@@ -8,7 +8,9 @@
         :posts="posts"
         :pages="pages"
         :events="events"
+        :teamMembers="teamMembers"
         :key="$route.path"
+        @showModal="onShowModal"
       />
       <hr class="square" />
     </div>
@@ -62,6 +64,7 @@ export default {
       posts: [],
       pages: [],
       events: [],
+      teamMembers: [],
       name: this.$route.path,
       showModal: false,
     };
@@ -76,6 +79,9 @@ export default {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)
       .then((r) => r.json())
       .then((res) => (this.events = res));
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/team-member`)
+      .then((r) => r.json())
+      .then((res) => (this.teamMembers = res));
   },
   methods: {
     onShowModal(modalType) {
@@ -215,7 +221,7 @@ input {
 
 iframe {
   display: block;
-  margin: 1rem auto 0;
+  margin: 1rem 0 0;
   max-width: 400px;
 }
 

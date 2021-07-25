@@ -3,6 +3,7 @@ import HomePage from "../components/HomePage.vue";
 import Article from "../components/Article.vue";
 import Event from "../components/Event.vue";
 import Grid from "../components/Grid.vue";
+import TeamPage from "../components/TeamPage.vue";
 import Page from "../components/Page.vue";
 import NotFound from "../components/NotFound.vue";
 import SignIn from "../components/SignIn.vue";
@@ -41,6 +42,12 @@ const routes = [
     path: "/events",
     component: Grid,
     meta: {title: 'Events'}
+  },
+  {
+    name: "Team",
+    path: "/about/team",
+    component: TeamPage,
+    meta: {title: 'Team'}
   },
   {
     name: "News",
