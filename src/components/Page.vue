@@ -3,31 +3,55 @@
   <hr />
   <article
     class="article"
-    v-if="(page && !page.acf) || (page.acf && !page.acf.form_content)"
+    v-if="
+      (page && !page.acf) ||
+      (page.acf && (!page.acf.form_content || page.acf.form_content === 'none'))
+    "
   >
     <div class="left">
+      <img
+        :src="headlineImage"
+        alt=""
+        v-if="headlineImage"
+        class="headline-image desktop"
+      />
       <p v-html="page.acf.headline" v-if="page.acf" class="headline"></p>
     </div>
-    <div v-html="pageHtml" v-if="pageHtml"></div>
+    <div>
+      <img
+        :src="headlineImage"
+        alt=""
+        v-if="headlineImage"
+        class="headline-image mobile"
+      />
+      <div v-html="pageHtml" v-if="pageHtml"></div>
+    </div>
     <div class="right">
-      <div class="top" v-if="events">
+      <div class="top" v-if="events && upcomingEvents">
         <Events :events="events" />
       </div>
     </div>
   </article>
   <article
-    class="article columns"
+    class="article"
     v-if="page.acf && page.acf.form_content === 'contact'"
   >
-    <div class="column">
+    <div class="left">
+      <p v-html="page.acf.headline" v-if="page.acf" class="headline"></p>
+    </div>
+    <div>
       <div v-html="pageHtml" v-if="pageHtml"></div>
       <ContactForm />
     </div>
+    <div class="right"></div>
   </article>
   <article
     class="article columns"
     v-if="
-      page.acf && page.acf.form_content && page.acf.form_content !== 'contact'
+      page.acf &&
+      page.acf.form_content &&
+      page.acf.form_content !== 'contact' &&
+      page.acf.form_content !== 'none'
     "
   >
     <div class="column" v-html="pageHtml" v-if="pageHtml"></div>
@@ -84,6 +108,20 @@ export default {
       router.push({ path: `/event/${url}` });
     },
     sendMessage() {},
+  },
+  computed: {
+    upcomingEvents() {
+      if (this.page.acf) {
+        return this.page.acf.upcoming_events || false;
+      }
+      return false;
+    },
+    headlineImage() {
+      if (this.page.acf) {
+        return this.page.acf.headline_image || false;
+      }
+      return false;
+    },
   },
 };
 </script>
@@ -204,6 +242,28 @@ export default {
   color: var(--highlight-colour);
 }
 
+.headline-image {
+  width: 100%;
+  margin-top: 1rem;
+  max-width: 300px;
+}
+
+.headline-image.mobile {
+  display: block;
+  float: none;
+  margin-right: 1rem;
+}
+
+.headline-image.desktop {
+  display: none;
+}
+
+@media screen and (min-width: 500px) {
+  .headline-image.mobile {
+    float: left;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .article {
     grid-template-columns: [left] 1fr [content] 3fr [right] 1fr;
@@ -216,6 +276,12 @@ export default {
   }
   .columns {
     max-width: 1100px;
+  }
+  .headline-image.mobile {
+    display: none;
+  }
+  .headline-image.desktop {
+    display: block;
   }
 }
 </style>

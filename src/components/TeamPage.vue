@@ -4,7 +4,7 @@
     <hr />
     <h2 class="category-title">Level Ground Leadership</h2>
     <TeamGrid :group="getTeam('leadership')" />
-    <h2 class="category-title">Skew Curatorial Team</h2>
+    <h2 class="category-title">SKEW Curatorial Team</h2>
     <TeamGrid :group="getTeam('skew')" />
     <h2 class="category-title">Current & Alumni Resident Artists</h2>
     <TeamGrid :group="getTeam('resident')" />

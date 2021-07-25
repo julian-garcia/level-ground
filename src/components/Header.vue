@@ -71,6 +71,7 @@ export default {
   top: 0;
   width: 68px;
   text-align: right;
+  z-index: 9;
 }
 
 .cta a {

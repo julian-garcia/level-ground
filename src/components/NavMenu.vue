@@ -1,46 +1,74 @@
 <template>
-  <ul class="nav-menu" :class="{show: showMenu}">
+  <ul class="nav-menu" :class="{ show: showMenu }">
     <li class="nav-menu__item" v-for="item in menuItems" :key="item.ID">
-      <router-link :to="item.slug" @click="showMenu = false">{{item.title}}</router-link>
+      <router-link :to="item.slug" @click="showMenu = false">{{
+        item.title
+      }}</router-link>
       <ul class="nav-menu__sub" v-if="item.submenu.length">
         <li v-for="item in item.submenu" :key="item.ID">
-          <router-link :to="item.slug" @click="showMenu = false">{{item.title}}</router-link>
+          <router-link :to="item.slug" @click="showMenu = false">{{
+            item.title
+          }}</router-link>
         </li>
       </ul>
     </li>
   </ul>
-  <img src="../assets/images/hamburger.svg" alt="" @click="showMenu = true" class="toggle-menu" v-if="!showMenu">
-  <img src="../assets/images/close.svg" alt="" @click="showMenu = false" class="close-menu" v-if="showMenu">
+  <img
+    src="../assets/images/hamburger.svg"
+    alt=""
+    @click="showMenu = true"
+    class="toggle-menu"
+    v-if="!showMenu"
+  />
+  <img
+    src="../assets/images/close.svg"
+    alt=""
+    @click="showMenu = false"
+    class="close-menu"
+    v-if="showMenu"
+  />
 </template>
 
 <script>
 export default {
-  name: 'NavMenu',
+  name: "NavMenu",
   data() {
     return {
       menuItems: Array,
-      showMenu: false
-    }
+      showMenu: false,
+    };
   },
   created() {
-    this.showMenu = false
+    this.showMenu = false;
     fetch(`${process.env.VUE_APP_CMS_URL}/api/menu`)
       .then((r) => r.json())
       .then((res) => {
-        this.menuItems = res.filter(item => item.post_parent === 0); 
-        this.menuItems.map(element => {
-          element['slug'] = element.url.indexOf('http') === -1 ? element.url : `/${element.url.split('/')[3]}`
-          element['submenu'] = res.filter(item => item.post_parent !== 0 && item.post_parent === parseInt(element.object_id))
-          element['submenu'].forEach(item => {
-            item['slug'] = item.url.indexOf('http') === -1 ? item.url : `/${item.url.split('/')[3]}/${item.url.split('/')[4]}`
-          })
-        })
-      })
+        this.menuItems = res.filter((item) => item.post_parent === 0);
+        this.menuItems.map((element) => {
+          element["slug"] =
+            element.url.indexOf("http") === -1
+              ? element.url
+              : `/${element.url.split("/")[3]}`;
+          element["submenu"] = res.filter(
+            (item) =>
+              item.post_parent !== 0 &&
+              item.post_parent === parseInt(element.object_id)
+          );
+          element["submenu"].forEach((item) => {
+            item["slug"] =
+              item.url.indexOf("http") === -1
+                ? item.url
+                : `/${item.url.split("/")[3]}/${item.url.split("/")[4]}`;
+          });
+        });
+      });
   },
   mounted() {
-    window.addEventListener('resize', () => {this.showMenu = false})
-  }
-}
+    window.addEventListener("resize", () => {
+      this.showMenu = false;
+    });
+  },
+};
 </script>
 
 <style scoped>
@@ -48,15 +76,16 @@ export default {
   text-align: left;
 }
 
-.nav-menu__item a { 
-  text-decoration: none; 
-  color: black; 
+.nav-menu__item a {
+  text-decoration: none;
+  color: black;
   display: block;
   padding: 10px 1rem;
-  transition: color .3s ease-in-out;
+  transition: color 0.3s ease-in-out;
 }
 
-.nav-menu__item a:hover, .nav-menu__item a.router-link-active {
+.nav-menu__item a:hover,
+.nav-menu__item a.router-link-active {
   color: var(--highlight-colour);
 }
 
@@ -73,15 +102,15 @@ export default {
   top: 0;
   left: 0;
   padding: 1rem 2rem;
-  z-index: 9;
+  z-index: 99;
   width: 100%;
   height: 100vh;
   overflow-y: auto;
-  background: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, 0.9);
   box-sizing: border-box;
 }
 
-.nav-menu.show .nav-menu__item a { 
+.nav-menu.show .nav-menu__item a {
   display: inline-block;
   margin: 0 auto;
   padding: 10px;
@@ -111,15 +140,15 @@ export default {
   top: 0;
   padding: 1rem;
   cursor: pointer;
-  z-index: 9;
+  z-index: 99;
   width: 30px;
 }
 
 @media screen and (min-width: 900px) {
-  .nav-menu { 
-    display: grid; 
+  .nav-menu {
+    display: grid;
     position: relative;
-    grid-template-columns: repeat(auto-fit, minmax(0,max-content));
+    grid-template-columns: repeat(auto-fit, minmax(0, max-content));
     justify-content: center;
     max-width: 800px;
     margin: 1rem auto;
@@ -129,12 +158,12 @@ export default {
   .nav-menu__item {
     text-align: center;
   }
-  .nav-menu.show .nav-menu__item a { 
+  .nav-menu.show .nav-menu__item a {
     margin: 10px auto;
   }
-  .nav-menu__item > a:hover+.nav-menu__sub {
+  .nav-menu__item > a:hover + .nav-menu__sub {
     opacity: 1;
-    z-index: 1;
+    z-index: 9;
   }
   .toggle-menu {
     display: none;
@@ -142,16 +171,16 @@ export default {
   .nav-menu__sub {
     position: absolute;
     padding: 10px;
-    background: rgba(255, 255, 255, .8);
+    background: rgba(255, 255, 255, 0.8);
     opacity: 0;
     z-index: -1;
-    transition: opacity .3s ease-in-out, z-index .3s ease-in-out;
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+    transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
     margin-bottom: 0;
   }
   .nav-menu__sub:hover {
     opacity: 1;
-    z-index: 1;
+    z-index: 9;
   }
   .nav-menu__sub a {
     display: block;

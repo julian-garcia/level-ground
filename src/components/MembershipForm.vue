@@ -22,7 +22,7 @@
     scrolling="no"
     height="900px"
     width="100%"
-    style="max-width: 500px; min-width: 250px; max-height: none !important"
+    style="max-width: 100%; min-width: 300px; max-height: none !important"
     v-if="donationFrequency === 'monthly'"
   ></iframe>
   <iframe
@@ -34,7 +34,7 @@
     scrolling="no"
     height="900px"
     width="100%"
-    style="max-width: 500px; min-width: 250px; max-height: none !important"
+    style="max-width: 100%; min-width: 300px; max-height: none !important"
     v-if="donationFrequency === 'annually'"
   ></iframe>
 </template>

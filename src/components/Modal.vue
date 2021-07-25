@@ -38,6 +38,7 @@ export default {
   transform: translate(-50%, -50%);
   padding: 2rem;
   overflow-y: scroll;
+  overflow-x: hidden;
   box-sizing: border-box;
   z-index: 9;
 }
@@ -49,6 +50,7 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
 }
 
 .modal :deep(h2),

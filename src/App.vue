@@ -152,7 +152,7 @@ h3 {
 }
 hr {
   border: none;
-  height: 1px;
+  height: 2px;
   background: var(--highlight-colour-muted);
   position: relative;
   overflow: visible;
