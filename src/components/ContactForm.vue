@@ -4,7 +4,7 @@
     <input type="email" name="email" />
     <label>Message</label>
     <textarea name="message"></textarea>
-    <input type="submit" value="Send" />
+    <input type="submit" value="Send" class="button" />
   </form>
   <img
     v-if="formSubmitted && !messageSent"

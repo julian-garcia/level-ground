@@ -90,9 +90,6 @@ export default {
       .then((r) => r.json())
       .then((res) => {
         this.page = res;
-        if (!this.page.content) {
-          this.page.content = `<h2 style="text-align: center">Under construction</h2>`;
-        }
         this.pageHtml = this.page.content;
         document.title = `Level Ground - ${this.page.post_title}`;
       })
@@ -107,7 +104,6 @@ export default {
     goToEvent(url) {
       router.push({ path: `/event/${url}` });
     },
-    sendMessage() {},
   },
   computed: {
     upcomingEvents() {

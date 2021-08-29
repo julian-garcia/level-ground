@@ -1,6 +1,7 @@
 <template>
   <button
     class="button"
+    style="margin-top: 1rem"
     @click="donationFrequency = 'monthly'"
     :class="[donationFrequency === 'monthly' ? 'active' : 'inactive']"
   >
@@ -22,7 +23,6 @@
     scrolling="no"
     height="900px"
     width="100%"
-    style="max-width: 100%; min-width: 300px; max-height: none !important"
     v-if="donationFrequency === 'monthly'"
   ></iframe>
   <iframe
@@ -34,7 +34,6 @@
     scrolling="no"
     height="900px"
     width="100%"
-    style="max-width: 100%; min-width: 300px; max-height: none !important"
     v-if="donationFrequency === 'annually'"
   ></iframe>
 </template>
@@ -125,6 +124,13 @@ form.membership ul > li.membership__option input:checked + label {
 form.membership ul > li.membership__option::before {
   content: none;
 }
+
+iframe {
+  max-width: 100%;
+  width: 400px;
+  max-height: none !important;
+}
+
 .button {
   margin: auto;
   display: block;
@@ -144,7 +150,26 @@ input:checked + label .option-title {
   margin: 0 1rem 1rem 0;
   display: inline-block;
 }
+.button.active:hover {
+  color: white;
+  background: var(--highlight-colour);
+  cursor: default;
+}
 .button.inactive {
+  color: var(--highlight-colour);
   background: var(--highlight-colour-muted);
+  position: relative;
+}
+.button.inactive::after {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  background: rgba(255, 255, 255, 0.5);
+}
+.button.inactive:hover:after {
+  display: none;
 }
 </style>

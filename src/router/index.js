@@ -21,6 +21,14 @@ const routes = [
     component: Article,
   },
   {
+    path: "/member-article/:slug",
+    component: Article,
+  },
+  {
+    path: "/opportunity/:slug",
+    component: Article,
+  },
+  {
     path: "/event/:slug",
     component: Event,
   },

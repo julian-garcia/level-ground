@@ -5,18 +5,40 @@
         <h2 class="title">EXPERIMENT</h2>
         <h2 class="title">IN <span class="reverse">E</span>MPATHY</h2>
       </div>
-      <div>
+      <div v-if="page.acf">
         <p>
-          Through organizing and creating with artists, Level Ground is
-          committed to destabilizing oppressive social structures through art
-          making, community building, and resource sharing.
+          {{ page.acf.headline }}
         </p>
-        <button class="button" @click="emitShowModal('give')">
-          Make a Donation Today
-        </button>
-        <router-link class="mission" to="/404"
-          >Read About Our Mission</router-link
-        >
+        <template v-if="page.acf.primary_link">
+          <button
+            class="button"
+            @click="emitShowModal('give')"
+            v-if="page.acf.primary_link.link === 'give'"
+          >
+            {{ page.acf.primary_link.text }}
+          </button>
+          <router-link
+            class="button"
+            :to="page.acf.primary_link.link"
+            v-if="page.acf.primary_link.link !== 'give'"
+            >{{ page.acf.primary_link.text }}
+          </router-link>
+        </template>
+        <template v-if="page.acf.secondary_link">
+          <button
+            class="mission"
+            @click="emitShowModal('give')"
+            v-if="page.acf.secondary_link.link === 'give'"
+          >
+            {{ page.acf.secondary_link.text }}
+          </button>
+          <router-link
+            class="mission"
+            :to="page.acf.secondary_link.link"
+            v-if="page.acf.secondary_link.link !== 'give'"
+            >{{ page.acf.secondary_link.text }}
+          </router-link>
+        </template>
       </div>
     </div>
     <div class="cards__feature">
@@ -86,7 +108,19 @@ export default {
     stories: Array,
     posts: Array,
   },
+  data() {
+    return {
+      page: {},
+    };
+  },
   emits: ["showModal"],
+  created() {
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/page/home-page`)
+      .then((r) => r.json())
+      .then((res) => {
+        this.page = res;
+      });
+  },
   computed: {
     getPopularPosts() {
       return this.posts.filter((post) => post.acf.popular === true).slice(0, 5);
@@ -120,6 +154,10 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+}
+
+.headline .button {
+  margin: 0 0.5rem 0.5rem 0;
 }
 
 .cards__feature {
@@ -173,9 +211,13 @@ export default {
 .mission {
   text-decoration: none;
   font-size: var(--button-font-size);
+  font-family: Asap;
   color: black;
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   display: block;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 .headline {

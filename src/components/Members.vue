@@ -1,37 +1,108 @@
 <template>
-  <h1 class="page-title">Members</h1>
-  <hr />
   <h2 v-if="!user" style="text-align: center">
     Please <router-link to="/signin">sign in</router-link> to access the
     members' area
   </h2>
+  <h1 class="page-title" v-if="user">Collective Artists</h1>
+  <hr v-if="user" />
+  <div class="links" v-if="user">
+    <button
+      class="button links-button"
+      @click="tab = 'blog'"
+      :class="[tab === 'blog' ? 'active' : 'inactive']"
+    >
+      Blog
+    </button>
+    <button
+      class="button links-button"
+      @click="tab = 'calendar'"
+      :class="[tab === 'calendar' ? 'active' : 'inactive']"
+    >
+      Calendar
+    </button>
+    <button
+      class="button links-button"
+      @click="tab = 'artists'"
+      :class="[tab === 'artists' ? 'active' : 'inactive']"
+    >
+      Artist Database
+    </button>
+    <button
+      class="button links-button"
+      @click="tab = 'resources'"
+      :class="[tab === 'resources' ? 'active' : 'inactive']"
+    >
+      Collective Resources
+    </button>
+    <button
+      class="button links-button"
+      @click="tab = 'opportunities'"
+      :class="[tab === 'opportunities' ? 'active' : 'inactive']"
+    >
+      Opportunities
+    </button>
+    <button class="button links-button signout" @click="signOut()">
+      Sign Out
+    </button>
+  </div>
   <div v-if="user" class="dashboard">
-    <button class="button signout" @click="signOut()">Sign Out</button>
-    <h2>Artists Database</h2>
-    <iframe
-      class="airtable-embed"
-      src="https://airtable.com/embed/shrymnQBj8pX6Ah4K?backgroundColor=orange"
-      frameborder="0"
-      onmousewheel=""
-      width="100%"
-      height="533"
-      style="background: transparent"
-    ></iframe>
+    <div class="tab" v-if="tab === 'blog'">
+      <Grid :memberPosts="memberPosts" />
+    </div>
+    <div class="tab" v-if="tab === 'opportunities'">
+      <Grid :opportunityPosts="opportunityPosts" />
+    </div>
+    <div class="tab" v-if="tab === 'artists'">
+      <hr />
+      <h2 class="tab-title">Artist Database</h2>
+      <iframe
+        class="airtable-embed"
+        src="https://airtable.com/embed/shrymnQBj8pX6Ah4K?backgroundColor=orange"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="533"
+        style="background: transparent"
+      ></iframe>
+    </div>
+    <div class="tab" v-if="tab === 'resources'">
+      <hr />
+      <h2 class="tab-title">Collective Resources</h2>
+    </div>
+    <div class="tab" v-if="tab === 'calendar'">
+      <hr />
+      <h2 class="tab-title">Calendar</h2>
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
+import Grid from "./Grid.vue";
 
 export default {
   name: "Members",
+  components: {
+    Grid,
+  },
   data() {
-    return { user: null };
+    return {
+      user: null,
+      tab: "blog",
+      memberPosts: [],
+      opportunityPosts: [],
+    };
   },
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
+        fetch(`${process.env.VUE_APP_CMS_URL}/api/member-article`)
+          .then((r) => r.json())
+          .then((res) => (this.memberPosts = res));
+        fetch(`${process.env.VUE_APP_CMS_URL}/api/opportunity`)
+          .then((r) => r.json())
+          .then((res) => (this.opportunityPosts = res));
       }
     });
   },
@@ -57,8 +128,21 @@ iframe {
   position: relative;
 }
 .button.signout {
-  position: absolute;
-  top: 0;
-  right: 0;
+  margin-bottom: 10px;
+}
+.links,
+.tab-title {
+  text-align: center;
+}
+.links-button {
+  margin: 10px 5px 0;
+}
+.links-button.active {
+  background: black;
+  border: 1px solid black;
+  cursor: default;
+}
+.links-button.active:hover {
+  color: white;
 }
 </style>

@@ -79,7 +79,7 @@ export default {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)
       .then((r) => r.json())
       .then((res) => (this.events = res));
-    fetch(`${process.env.VUE_APP_CMS_URL}/api/team-member`)
+    fetch(`${process.env.VUE_APP_CMS_URL}/api/team`)
       .then((r) => r.json())
       .then((res) => (this.teamMembers = res));
   },
@@ -180,7 +180,6 @@ a {
 input[type="button"],
 input[type="submit"] {
   border-radius: 5px;
-  border: none;
   background: var(--highlight-colour);
   color: white;
   min-width: 100px;
@@ -197,6 +196,17 @@ input[type="submit"] {
 
 .button.full-width {
   width: 100%;
+}
+
+.button {
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  border: 1px solid var(--highlight-colour);
+}
+
+.button:hover {
+  color: var(--highlight-colour);
+  background: var(--highlight-colour-muted);
+  border: 1px solid var(--highlight-colour);
 }
 
 .page-title {

@@ -16,6 +16,7 @@
 
 <script>
 import router from "../router";
+import firebase from "firebase";
 
 export default {
   name: "Article",
@@ -26,7 +27,22 @@ export default {
     };
   },
   created() {
-    fetch(`${process.env.VUE_APP_CMS_URL}/api/post/${this.$route.params.slug}`)
+    const postType =
+      this.$route.path.split("/")[1] === "article"
+        ? "post"
+        : this.$route.path.split("/")[1];
+
+    if (postType !== "post") {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user === null) {
+          router.push({ path: `/404` });
+        }
+      });
+    }
+
+    fetch(
+      `${process.env.VUE_APP_CMS_URL}/api/${postType}/${this.$route.params.slug}`
+    )
       .then((r) => r.json())
       .then((res) => {
         this.post = res;
@@ -38,7 +54,6 @@ export default {
       })
       .catch(() => router.push({ path: `/404` }));
   },
-  computed: {},
 };
 </script>
 
