@@ -104,7 +104,7 @@ export default {
 :root {
   background: #fff7f7;
   --background: #fff7f7;
-  --background-transparent: #fff7f7b2;
+  --background-transparent: #fff7f7db;
   --highlight-colour: #e5511b;
   --highlight-colour-muted: #ffe9e6;
   --highlight-colour-light: #fef2f0;
@@ -122,8 +122,7 @@ body {
 
 .container {
   position: relative;
-  display: grid;
-  grid-template-columns: [leftbar] 1rem [content] 1fr [rightbar] 1rem;
+  display: block;
 }
 
 .leftbar {
@@ -261,11 +260,12 @@ iframe {
 @media screen and (min-width: 300px) {
   .container {
     padding: 0 10px;
-    grid-template-columns: [leftbar] 0 [content] 1fr [rightbar] 0;
   }
 }
 @media screen and (min-width: 600px) {
   .container {
+    display: grid;
+    grid-template-columns: [leftbar] 0 [content] 1fr [rightbar] 0;
     padding: 0 30px;
   }
   :not(.half) + .half {

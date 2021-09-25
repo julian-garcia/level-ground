@@ -1,14 +1,28 @@
 <template>
   <ul class="nav-menu" :class="{ show: showMenu }">
     <li class="nav-menu__item" v-for="item in menuItems" :key="item.ID">
-      <router-link :to="item.slug" @click="showMenu = false">{{
-        item.title
-      }}</router-link>
+      <router-link
+        :to="item.slug"
+        @click="showMenu = false"
+        v-if="item.slug !== '#'"
+        >{{ item.title }}</router-link
+      >
+      <a v-if="item.slug === '#'" href="#">{{ item.title }}</a>
       <ul class="nav-menu__sub" v-if="item.submenu.length">
         <li v-for="item in item.submenu" :key="item.ID">
           <router-link :to="item.slug" @click="showMenu = false">{{
             item.title
           }}</router-link>
+          <ul class="nav-menu__sub2" v-if="item.submenu">
+            <li v-for="item in item.submenu" :key="item.ID">
+              <router-link
+                v-if="item.url"
+                :to="item.url"
+                @click="showMenu = false"
+                >{{ item.title }}</router-link
+              >
+            </li>
+          </ul>
         </li>
       </ul>
     </li>
@@ -43,18 +57,25 @@ export default {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/menu`)
       .then((r) => r.json())
       .then((res) => {
-        this.menuItems = res.filter((item) => item.post_parent === 0);
+        this.menuItems = res.filter((item) => item.menu_item_parent === "0");
         this.menuItems.map((element) => {
           element["slug"] =
             element.url.indexOf("http") === -1
               ? element.url
               : `/${element.url.split("/")[3]}`;
           element["submenu"] = res.filter(
-            (item) =>
-              item.post_parent !== 0 &&
-              item.post_parent === parseInt(element.object_id)
+            (item) => parseInt(item.menu_item_parent) === element.ID
           );
           element["submenu"].forEach((item) => {
+            item["submenu"] = res.filter(
+              (subItem) => parseInt(subItem.menu_item_parent) === item.ID
+            );
+            item["submenu"].forEach((subItem) => {
+              subItem.url = subItem.url.replace(
+                process.env.VUE_APP_CMS_URL.replace("/wp-json", ""),
+                ""
+              );
+            });
             item["slug"] =
               item.url.indexOf("http") === -1
                 ? item.url
@@ -118,9 +139,17 @@ export default {
   position: relative;
 }
 
-.nav-menu__sub {
+.nav-menu__sub,
+.nav-menu__sub2 {
   list-style: none;
+}
+
+.nav-menu__sub {
   margin-bottom: 20px;
+}
+
+.nav-menu__sub2 {
+  padding-left: 20px;
 }
 
 .toggle-menu {
@@ -171,7 +200,7 @@ export default {
   .nav-menu__sub {
     position: absolute;
     padding: 10px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     opacity: 0;
     z-index: -1;
     transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;

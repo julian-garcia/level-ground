@@ -246,7 +246,7 @@ export default {
 .content form input:not([type="submit"]),
 .content form textarea {
   min-width: 100%;
-  max-width: 100%;
+  max-width: calc(100% - 20px);
   margin-bottom: 2.5rem;
   box-sizing: border-box;
   border: 1px solid var(--accent-colour-2);

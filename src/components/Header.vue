@@ -5,6 +5,13 @@
     </router-link>
     <NavMenu />
     <div class="cta">
+      <a
+        href="https://www.instagram.com/levelground.co/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social"
+        ><img src="../assets/images/instagram.png" alt=""
+      /></a>
       <a href="#" @click="emitShowModal('subscribe')">Subscribe</a>
       <router-link to="/signin" v-if="!user">Sign In</router-link>
       <router-link to="/members" v-if="user">Members</router-link>
@@ -52,13 +59,14 @@ export default {
   max-width: 260px;
 }
 
-.give {
+.give,
+.social {
   position: relative;
 }
 .give img {
   position: absolute;
   width: 20px;
-  top: unset;
+  top: 3px;
   bottom: 0px;
   right: 35px;
 }
@@ -78,7 +86,17 @@ export default {
   color: black;
   margin: 10px 0 5px;
   display: block;
+  padding: 5px;
   background: var(--background-transparent);
+}
+
+.social img {
+  height: 24px;
+}
+
+.cta .social {
+  margin: 10px 0 0;
+  background: transparent;
 }
 
 @media screen and (min-width: 900px) {
@@ -91,13 +109,25 @@ export default {
     text-align: center;
   }
   .cta a {
-    display: inline;
+    display: inline-block;
     padding: 0 15px;
+    line-height: 24px;
+    max-height: 24px;
   }
   .give img {
-    top: -1px;
+    top: 1px;
     right: 45px;
     bottom: unset;
+  }
+  .give img {
+    top: 1px;
+    right: 45px;
+    bottom: unset;
+  }
+  .social img {
+    position: absolute;
+    top: -17px;
+    left: 0;
   }
 }
 </style>

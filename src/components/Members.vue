@@ -11,7 +11,7 @@
       @click="tab = 'blog'"
       :class="[tab === 'blog' ? 'active' : 'inactive']"
     >
-      Blog
+      Content
     </button>
     <button
       class="button links-button"
@@ -32,7 +32,7 @@
       @click="tab = 'resources'"
       :class="[tab === 'resources' ? 'active' : 'inactive']"
     >
-      Collective Resources
+      Resources
     </button>
     <button
       class="button links-button"
@@ -54,7 +54,6 @@
     </div>
     <div class="tab" v-if="tab === 'artists'">
       <hr />
-      <h2 class="tab-title">Artist Database</h2>
       <iframe
         class="airtable-embed"
         src="https://airtable.com/embed/shrymnQBj8pX6Ah4K?backgroundColor=orange"
@@ -65,13 +64,21 @@
         style="background: transparent"
       ></iframe>
     </div>
-    <div class="tab" v-if="tab === 'resources'">
+    <div class="tab" v-if="tab === 'resources'" style="text-align: center">
       <hr />
-      <h2 class="tab-title">Collective Resources</h2>
+      <div class="column" v-html="memberResources" v-if="memberResources"></div>
     </div>
     <div class="tab" v-if="tab === 'calendar'">
       <hr />
-      <h2 class="tab-title">Calendar</h2>
+      <iframe
+        class="airtable-embed"
+        src="https://airtable.com/embed/shrgsqjiDa93QAfTq?backgroundColor=orange"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="533"
+        style="background: transparent"
+      ></iframe>
     </div>
   </div>
 </template>
@@ -91,6 +98,7 @@ export default {
       tab: "blog",
       memberPosts: [],
       opportunityPosts: [],
+      memberResources: [],
     };
   },
   mounted() {
@@ -103,6 +111,9 @@ export default {
         fetch(`${process.env.VUE_APP_CMS_URL}/api/opportunity`)
           .then((r) => r.json())
           .then((res) => (this.opportunityPosts = res));
+        fetch(`${process.env.VUE_APP_CMS_URL}/api/page/member-resources`)
+          .then((r) => r.json())
+          .then((res) => (this.memberResources = res.post_content));
       }
     });
   },
@@ -126,6 +137,8 @@ iframe {
 }
 .dashboard {
   position: relative;
+  max-width: 970px;
+  margin: auto;
 }
 .button.signout {
   margin-bottom: 10px;
@@ -141,6 +154,18 @@ iframe {
   background: black;
   border: 1px solid black;
   cursor: default;
+  position: relative;
+}
+.links-button.active::before {
+  content: "";
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  background: black;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: -1;
 }
 .links-button.active:hover {
   color: white;

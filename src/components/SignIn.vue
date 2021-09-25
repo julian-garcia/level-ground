@@ -1,6 +1,14 @@
 <template>
+  <h1>Sign In</h1>
+  <p class="signin-intro">
+    This sign-in page takes you to content exclusively for the Level Ground
+    community. If you're an artist that wants to join the Level Ground
+    Collective,
+    <router-link to="/collective">click here</router-link>. If you want to
+    support experiments in empathy, you can join the Level Ground community by
+    <router-link to="/membership">becoming&nbsp;a&nbsp;member</router-link>.
+  </p>
   <div class="signin-form">
-    <h1>Sign In</h1>
     <form @submit.prevent="onSubmit">
       <div class="form-group">
         <label><strong>Email</strong></label>
@@ -64,6 +72,11 @@ export default {
 </script>
 
 <style scoped>
+.signin-intro {
+  max-width: 700px;
+  margin: auto;
+}
+
 h1 {
   text-align: center;
 }

@@ -38,6 +38,11 @@ const routes = [
     meta: {title: 'Members'}
   },
   {
+    path: "/member-resources",
+    component: NotFound,
+    meta: {title: 'Page not found'}
+  },
+  {
     path: "/:slug",
     component: Page,
   },

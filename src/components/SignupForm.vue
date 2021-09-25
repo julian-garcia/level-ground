@@ -42,30 +42,6 @@
       />
       <p v-if="emailError" class="error">{{ emailError }}</p>
     </div>
-    <div class="mc-field-group signup__field">
-      <label for="mce-TITLE">Title </label>
-      <input type="text" name="TITLE" id="mce-TITLE" />
-    </div>
-    <div class="mc-field-group signup__field left">
-      <label for="mce-ZIP">Zip Code </label>
-      <input type="text" name="ZIP" id="mce-ZIP" />
-    </div>
-    <div class="mc-field-group signup__field right">
-      <label for="mce-CITY">City </label>
-      <input type="text" name="CITY" id="mce-CITY" />
-    </div>
-    <div class="mc-field-group signup__field">
-      <label for="mce-OUTLET">Outlet </label>
-      <input type="text" name="OUTLET" id="mce-OUTLET" />
-    </div>
-    <div class="mc-field-group signup__field left">
-      <label for="mce-TWITTER">Twitter </label>
-      <input type="text" name="TWITTER" id="mce-TWITTER" />
-    </div>
-    <div class="mc-field-group signup__field right">
-      <label for="mce-SOURCES">Sources </label>
-      <input type="text" name="SOURCES" id="mce-SOURCES" />
-    </div>
     <div id="mce-responses" class="clear">
       <div class="response" id="mce-error-response" style="display: none"></div>
       <div
@@ -90,6 +66,11 @@
       id="mc-embedded-subscribe"
       class="button"
     />
+    <p>
+      Level Ground sends emails about once a month, and sometimes more
+      frequently when we're promoting a big event or project. We promise to
+      respect your time, attention, and privacy.
+    </p>
   </form>
   <h2 v-if="validFormMessage">
     Thanks! You will now be taken to <br />Mailchimp to confirm your details.
@@ -155,6 +136,7 @@ export default {
 form {
   position: relative;
   margin-bottom: 2rem;
+  max-width: 500px;
 }
 
 form:before {
@@ -180,6 +162,10 @@ form.signup .signup__field {
 
 form.signup .signup__field::before {
   content: none;
+}
+
+form p {
+  background: rgba(255, 255, 255, 0.8);
 }
 
 form label {
