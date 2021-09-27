@@ -2,8 +2,11 @@
   <div class="home">
     <div class="headline">
       <div class="title-container">
-        <h2 class="title">EXPERIMENT</h2>
-        <h2 class="title">IN <span class="reverse">E</span>MPATHY</h2>
+        <h2 class="title" id="t1">EXPERIMENT</h2>
+        <h2 class="title">
+          <span id="t2">IN&nbsp;</span>
+          <span class="reverse" id="t3">E</span><span id="t4">MPATHY</span>
+        </h2>
       </div>
       <div v-if="page.acf">
         <p>
@@ -101,6 +104,7 @@
 
 <script>
 import router from "../router";
+import gsap from "gsap";
 
 export default {
   name: "HomePage",
@@ -139,6 +143,29 @@ export default {
     emitShowModal(modalType) {
       this.$emit("showModal", modalType);
     },
+  },
+  mounted() {
+    gsap.from("#t1", {
+      duration: 2,
+      ease: " back.inOut(1.7)",
+      x: -1500,
+    });
+    gsap.from("#t2", {
+      duration: 2,
+      ease: " back.inOut(1.7)",
+      y: -500,
+    });
+    gsap.from("#t3", {
+      duration: 2,
+      ease: " back.inOut(1.7)",
+      y: 500,
+    });
+    gsap.from("#t4", {
+      duration: 2,
+      ease: " back.inOut(1.7)",
+      x: 1000,
+    });
+    gsap.from("#t1", { duration: 2.5, scale: 0.5 });
   },
 };
 </script>
@@ -229,6 +256,10 @@ export default {
   font-family: Asap;
   font-size: 42px;
   position: relative;
+}
+
+.headline .title span {
+  display: inline-block;
 }
 
 .headline .title::after {
