@@ -71,6 +71,9 @@ import Events from "./Events.vue";
 import MembershipForm from "./MembershipForm.vue";
 import CollectiveForm from "./CollectiveForm.vue";
 import ContactForm from "./ContactForm.vue";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   name: "Page",
@@ -92,6 +95,27 @@ export default {
         this.page = res;
         this.pageHtml = this.page.content;
         document.title = `Level Ground - ${this.page.post_title}`;
+        if (this.page.acf && this.pageHtml) {
+          setTimeout(() => {
+            document.querySelectorAll(".article li").forEach((item) => {
+              gsap
+                .timeline({
+                  scrollTrigger: {
+                    trigger: item,
+                    scrub: 0,
+                    start: "top bottom",
+                    end: "top 65%",
+                  },
+                })
+                .from(item, {
+                  x: -100,
+                  opacity: 0,
+                  rotateY: 90,
+                  ease: "power1.inOut",
+                });
+            });
+          }, 0);
+        }
       })
       .catch(() => router.push({ path: `/404` }));
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event`)

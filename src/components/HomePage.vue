@@ -147,22 +147,22 @@ export default {
   mounted() {
     gsap.from("#t1", {
       duration: 2,
-      ease: " back.inOut(1.7)",
+      ease: "back.inOut(1.7)",
       x: -1500,
     });
     gsap.from("#t2", {
       duration: 2,
-      ease: " back.inOut(1.7)",
+      ease: "back.inOut(1.7)",
       y: -500,
     });
     gsap.from("#t3", {
       duration: 2,
-      ease: " back.inOut(1.7)",
+      ease: "back.inOut(1.7)",
       y: 500,
     });
     gsap.from("#t4", {
       duration: 2,
-      ease: " back.inOut(1.7)",
+      ease: "back.inOut(1.7)",
       x: 1000,
     });
     gsap.from("#t1", { duration: 2.5, scale: 0.5 });
