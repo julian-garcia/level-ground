@@ -3,7 +3,7 @@
     <router-link to="/">
       <img src="../assets/images/level-ground-logo.svg" alt="" class="logo" />
     </router-link>
-    <NavMenu />
+    <NavMenu @showModal="onShowModal" />
     <div class="cta">
       <a
         href="https://www.instagram.com/levelground.co/"
@@ -36,6 +36,9 @@ export default {
     NavMenu,
   },
   methods: {
+    onShowModal(modalType) {
+      this.$emit("showModal", modalType);
+    },
     emitShowModal(modalType) {
       this.$emit("showModal", modalType);
     },
@@ -63,6 +66,7 @@ export default {
 .social {
   position: relative;
 }
+
 .give img {
   position: absolute;
   width: 20px;
@@ -71,32 +75,12 @@ export default {
   right: 35px;
 }
 
-.cta {
-  display: block;
-  position: fixed;
-  right: 10px;
-  top: 0;
-  width: 68px;
-  text-align: right;
-  z-index: 9;
-}
-
-.cta a {
-  text-decoration: none;
-  color: black;
-  margin: 10px 0 5px;
-  display: block;
-  padding: 5px;
-  background: var(--background-transparent);
-}
-
 .social img {
   height: 24px;
 }
 
-.cta .social {
-  margin: 10px 0 0;
-  background: transparent;
+.cta {
+  display: none;
 }
 
 @media screen and (min-width: 900px) {
@@ -113,11 +97,8 @@ export default {
     padding: 0 15px;
     line-height: 24px;
     max-height: 24px;
-  }
-  .give img {
-    top: 1px;
-    right: 45px;
-    bottom: unset;
+    text-decoration: none;
+    color: black;
   }
   .give img {
     top: 1px;

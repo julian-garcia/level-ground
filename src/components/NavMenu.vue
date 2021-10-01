@@ -26,6 +26,25 @@
         </li>
       </ul>
     </li>
+    <div class="cta">
+      <a href="#" @click="emitShowModal('subscribe')">Subscribe</a>
+      <router-link @click="showMenu = false" to="/signin" v-if="!user"
+        >Sign In</router-link
+      >
+      <router-link @click="showMenu = false" to="/members" v-if="user"
+        >Members</router-link
+      >
+      <a href="#" class="give" @click="emitShowModal('give')"
+        ><img src="../assets/images/give.svg" alt="" /> Give</a
+      >
+    </div>
+    <a
+      href="https://www.instagram.com/levelground.co/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social"
+      ><img src="../assets/images/instagram.png" alt=""
+    /></a>
   </ul>
   <img
     src="../assets/images/hamburger.svg"
@@ -44,14 +63,18 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "NavMenu",
   data() {
     return {
       menuItems: Array,
       showMenu: false,
+      user: null,
     };
   },
+  emits: ["showModal"],
   created() {
     this.showMenu = false;
     fetch(`${process.env.VUE_APP_CMS_URL}/api/menu`)
@@ -88,6 +111,15 @@ export default {
     window.addEventListener("resize", () => {
       this.showMenu = false;
     });
+    firebase.auth().onAuthStateChanged((user) => {
+      this.user = user;
+    });
+  },
+  methods: {
+    emitShowModal(modalType) {
+      this.showMenu = false;
+      this.$emit("showModal", modalType);
+    },
   },
 };
 </script>
@@ -101,7 +133,7 @@ export default {
   text-decoration: none;
   color: black;
   display: block;
-  padding: 10px 1rem;
+  padding: 10px 0;
   transition: color 0.3s ease-in-out;
 }
 
@@ -122,7 +154,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  padding: 1rem 2rem;
+  padding: 1rem;
   z-index: 99;
   width: 100%;
   height: 100vh;
@@ -134,7 +166,7 @@ export default {
 .nav-menu.show .nav-menu__item a {
   display: inline-block;
   margin: 0 auto;
-  padding: 10px;
+  padding: 10px 0;
   font-size: 24px;
   position: relative;
 }
@@ -142,6 +174,7 @@ export default {
 .nav-menu__sub,
 .nav-menu__sub2 {
   list-style: none;
+  padding-left: 20px;
 }
 
 .nav-menu__sub {
@@ -165,7 +198,7 @@ export default {
 .close-menu {
   position: fixed;
   display: block;
-  right: 1rem;
+  right: 0.5rem;
   top: 0;
   padding: 1rem;
   cursor: pointer;
@@ -173,7 +206,57 @@ export default {
   width: 30px;
 }
 
+.cta {
+  display: block;
+  position: fixed;
+  right: 0px;
+  top: 80px;
+  text-align: right;
+  z-index: 9;
+  border-right: none;
+  background: var(--background-transparent);
+  box-shadow: 0 0px 10px var(--highlight-colour);
+}
+
+.cta a {
+  text-decoration: none;
+  color: black;
+  margin: 10px 0 5px;
+  display: block;
+  padding: 5px 15px;
+  line-height: 24px;
+  max-height: 24px;
+}
+
+.give {
+  position: relative;
+}
+
+.social img {
+  height: 30px;
+  position: absolute;
+  top: 22px;
+  right: 72px;
+}
+
+.give img {
+  position: absolute;
+  width: 20px;
+  top: 7px;
+  bottom: 0px;
+  right: 50px;
+}
+
+.cta .social {
+  margin: 10px 0 0;
+  background: transparent;
+}
+
 @media screen and (min-width: 900px) {
+  .cta,
+  .social {
+    display: none;
+  }
   .nav-menu {
     display: grid;
     position: relative;
@@ -187,6 +270,9 @@ export default {
   .nav-menu__item {
     text-align: center;
   }
+  .nav-menu__item a {
+    padding: 10px 1rem;
+  }
   .nav-menu.show .nav-menu__item a {
     margin: 10px auto;
   }
@@ -199,7 +285,7 @@ export default {
   }
   .nav-menu__sub {
     position: absolute;
-    padding: 10px;
+    padding: 10px 0;
     background: rgba(255, 255, 255, 0.9);
     opacity: 0;
     z-index: -1;
