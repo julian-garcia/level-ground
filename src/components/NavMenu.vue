@@ -1,6 +1,11 @@
 <template>
   <ul class="nav-menu" :class="{ show: showMenu }">
-    <li class="nav-menu__item" v-for="item in menuItems" :key="item.ID">
+    <li
+      class="nav-menu__item"
+      v-for="item in menuItems"
+      :key="item.ID"
+      @mouseenter="hideSubMenus = false"
+    >
       <router-link
         :to="item.slug"
         @click="showMenu = false"
@@ -8,17 +13,25 @@
         >{{ item.title }}</router-link
       >
       <a v-if="item.slug === '#'" href="#">{{ item.title }}</a>
-      <ul class="nav-menu__sub" v-if="item.submenu.length">
+      <ul class="nav-menu__sub" v-if="item.submenu.length && !hideSubMenus">
         <li v-for="item in item.submenu" :key="item.ID">
-          <router-link :to="item.slug" @click="showMenu = false">{{
-            item.title
-          }}</router-link>
+          <router-link
+            :to="item.slug"
+            @click="
+              showMenu = false;
+              hideSubMenu(1, $event);
+            "
+            >{{ item.title }}</router-link
+          >
           <ul class="nav-menu__sub2" v-if="item.submenu">
             <li v-for="item in item.submenu" :key="item.ID">
               <router-link
                 v-if="item.url"
                 :to="item.url"
-                @click="showMenu = false"
+                @click="
+                  showMenu = false;
+                  hideSubMenu(2, $event);
+                "
                 >{{ item.title }}</router-link
               >
             </li>
@@ -64,6 +77,7 @@
 
 <script>
 import firebase from "firebase";
+import gsap from "gsap";
 
 export default {
   name: "NavMenu",
@@ -71,12 +85,14 @@ export default {
     return {
       menuItems: Array,
       showMenu: false,
+      hideSubMenus: false,
       user: null,
     };
   },
   emits: ["showModal"],
   created() {
     this.showMenu = false;
+    this.hideSubMenus = false;
     fetch(`${process.env.VUE_APP_CMS_URL}/api/menu`)
       .then((r) => r.json())
       .then((res) => {
@@ -119,6 +135,23 @@ export default {
     emitShowModal(modalType) {
       this.showMenu = false;
       this.$emit("showModal", modalType);
+    },
+    hideSubMenu(level, e) {
+      console.log(level, e.target.parentNode.parentNode);
+      const targetMenu =
+        level === 1
+          ? e.target.parentNode.parentNode
+          : e.target.parentNode.parentNode.parentNode.parentNode;
+      gsap
+        .to(targetMenu, {
+          duration: 0.5,
+          ease: "power3.out",
+          width: 0,
+          height: 0,
+          scaleX: 0,
+          scaleY: 0,
+        })
+        .then(() => (this.hideSubMenus = true));
     },
   },
 };
