@@ -37,7 +37,11 @@
     v-if="page.acf && page.acf.form_content === 'contact'"
   >
     <div class="left">
-      <p v-html="page.acf.headline" v-if="page.acf" class="headline"></p>
+      <p
+        v-html="page.acf.headline"
+        v-if="page.acf.headline"
+        class="headline"
+      ></p>
     </div>
     <div>
       <div v-html="pageHtml" v-if="pageHtml"></div>
@@ -233,6 +237,10 @@ export default {
 
 .article :deep(ol > li::before) {
   content: counter(list-counter);
+}
+
+.article :deep(.has-text-align-center) {
+  text-align: center;
 }
 
 .columns.columns {

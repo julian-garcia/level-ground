@@ -234,7 +234,7 @@ export default {
 
 .social img {
   height: 30px;
-  position: absolute;
+  position: fixed;
   top: 22px;
   right: 72px;
 }
