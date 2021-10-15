@@ -98,8 +98,8 @@ export default {
       .then((res) => {
         this.page = res;
         this.pageHtml = this.page.content
-          .replace(/http:\/\/level-ground.local/g, "")
-          .replace(/https:\/\/level-ground-cms.space/g, "");
+          .replace(/href="http:\/\/level-ground.local/g, 'href="')
+          .replace(/href="https:\/\/level-ground-cms.space/g, 'href="');
         document.title = `Level Ground - ${this.page.post_title}`;
         if (this.page.acf && this.pageHtml) {
           setTimeout(() => {
