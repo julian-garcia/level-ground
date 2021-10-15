@@ -72,6 +72,7 @@ export default {
 .article:deep(iframe),
 .article:deep(img) {
   max-width: 100%;
+  height: auto;
 }
 
 .feature-image {
