@@ -46,7 +46,9 @@ export default {
       .then((r) => r.json())
       .then((res) => {
         this.post = res;
-        this.articleHtml = this.post.content;
+        this.articleHtml = this.post.content
+          .replace(/http:\/\/level-ground.local/g, "")
+          .replace(/https:\/\/level-ground-cms.space/g, "");
         document.title = `Level Ground - ${this.post.post_title}`;
         if (!this.post.content) {
           router.push({ path: `/404` });
