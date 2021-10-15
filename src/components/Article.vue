@@ -75,6 +75,20 @@ export default {
   height: auto;
 }
 
+.article:deep(.wp-block-gallery) {
+  margin: 0;
+}
+.article:deep(.blocks-gallery-grid) {
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  list-style: none;
+}
+.article:deep(.blocks-gallery-item figure) {
+  margin: 0;
+}
+
 .feature-image {
   max-width: 100%;
   margin: auto;
