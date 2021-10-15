@@ -62,7 +62,10 @@
   <img
     src="../assets/images/hamburger.svg"
     alt=""
-    @click="showMenu = true"
+    @click="
+      showMenu = true;
+      hideSubMenus = false;
+    "
     class="toggle-menu"
     v-if="!showMenu"
   />

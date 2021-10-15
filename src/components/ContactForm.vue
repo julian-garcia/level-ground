@@ -44,8 +44,9 @@ export default {
           .then(
             (result) => {
               console.log(result.status, result.text);
+              document.querySelector(".article h2").remove();
               this.messageSent =
-                "Thank you for contacting us, we will get back to you";
+                "Thank you for reaching out, we will get back to you shortly!";
             },
             (error) => {
               console.error(error);

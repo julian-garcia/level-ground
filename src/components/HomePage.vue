@@ -236,10 +236,10 @@ export default {
 }
 
 .mission {
-  text-decoration: none;
+  text-decoration: underline;
+  color: var(--highlight-colour);
   font-size: var(--button-font-size);
   font-family: Asap;
-  color: black;
   margin: 0 0.5rem;
   display: block;
   border: 0;
