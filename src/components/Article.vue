@@ -72,7 +72,8 @@ export default {
 }
 
 .article:deep(iframe),
-.article:deep(img) {
+.article:deep(img),
+.article:deep(.wp-block-column figure.wp-block-image img) {
   max-width: 100%;
   height: auto;
 }
