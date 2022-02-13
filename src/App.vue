@@ -193,6 +193,14 @@ input[type="submit"] {
   text-align: center;
 }
 
+.button a {
+  color: white;
+}
+
+.button a:hover {
+  color: var(--highlight-colour);
+}
+
 .button.full-width {
   width: 100%;
 }

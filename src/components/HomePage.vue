@@ -130,7 +130,7 @@ export default {
       return this.posts.filter((post) => post.acf.popular === true).slice(0, 5);
     },
     getPosts() {
-      return this.posts.filter((post) => post.acf.feature !== true);
+      return this.posts.filter((post) => post.acf.feature !== true).slice(0, 6);
     },
     getFeaturePosts() {
       return this.posts.filter((post) => post.acf.feature === true).slice(0, 2);

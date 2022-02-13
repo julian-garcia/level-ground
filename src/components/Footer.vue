@@ -30,13 +30,18 @@
       />
     </form>
 
-    <p>&copy; Level Ground 2021</p>
+    <p>&copy; Level Ground {{ fullYear }}</p>
   </footer>
 </template>
 
 <script>
 export default {
   name: "Footer",
+  data() {
+    return {
+      fullYear: new Date().getFullYear(),
+    };
+  },
 };
 </script>
 

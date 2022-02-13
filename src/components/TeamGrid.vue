@@ -18,6 +18,7 @@
       <h2 class="team-member-detail">{{ item.post_title }}</h2>
       <p class="team-member-detail">{{ item.post_excerpt }}</p>
       <p class="team-member-detail">{{ item.acf.pronouns }}</p>
+      <p class="team-member-bio" v-if="item.acf.bio">{{ item.acf.bio }}</p>
     </div>
   </div>
 </template>
@@ -49,6 +50,11 @@ export default {
 
 .grid__item {
   cursor: pointer;
+  position: relative;
+}
+
+.grid__item:hover .team-member-bio {
+  opacity: 1;
 }
 
 .grid__item.no-link {
@@ -73,5 +79,21 @@ export default {
 .team-member-detail {
   text-align: center;
   margin: 5px 0 0;
+}
+
+.team-member-bio {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  width: calc(100% - 20px);
 }
 </style>

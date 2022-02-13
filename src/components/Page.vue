@@ -170,7 +170,11 @@ export default {
   text-align: center;
 }
 
-.article:deep(iframe),
+.article:deep(iframe) {
+  max-width: 100%;
+  margin: 0;
+}
+
 .article:deep(img),
 .article:deep(.wp-block-column figure.wp-block-image img) {
   max-width: 100%;
