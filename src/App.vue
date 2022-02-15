@@ -177,7 +177,8 @@ a {
 
 .button,
 input[type="button"],
-input[type="submit"] {
+input[type="submit"],
+.wp-block-button {
   border-radius: 5px;
   background: var(--highlight-colour);
   color: white;
@@ -193,24 +194,29 @@ input[type="submit"] {
   text-align: center;
 }
 
-.button a {
+.button a,
+.wp-block-button a {
   color: white;
 }
 
-.button a:hover {
+.button a:hover,
+.wp-block-button a:hover {
   color: var(--highlight-colour);
 }
 
-.button.full-width {
+.button.full-width,
+.wp-block-button.full-width {
   width: 100%;
 }
 
-.button {
+.button,
+.wp-block-button {
   transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
   border: 1px solid var(--highlight-colour);
 }
 
-.button:hover {
+.button:hover,
+.wp-block-button:hover {
   color: var(--highlight-colour);
   background: var(--highlight-colour-muted);
   border: 1px solid var(--highlight-colour);

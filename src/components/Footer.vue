@@ -1,6 +1,7 @@
 <template>
   <footer class="footer">
-    <h2>Don’t miss out on news or events</h2>
+    <h3>Join our mailing list.</h3>
+    <p>Don’t miss out on news or events</p>
     <form
       action="https://levelground.us10.list-manage.com/subscribe/post?u=91654b7b2f2c683f33e7f44a4&amp;id=95e2975d27"
       method="post"
@@ -12,7 +13,6 @@
       <img src="../assets/images/circles.svg" alt="" class="circles" />
       <input type="text" name="FULLNAME" id="mce-FULLNAME" placeholder="Name" />
       <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="Email" />
-      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
       <div style="position: absolute; left: -5000px" aria-hidden="true">
         <input
           type="text"

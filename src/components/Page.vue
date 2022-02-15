@@ -295,9 +295,16 @@ export default {
   display: none;
 }
 
+.article :deep(.residency) {
+  display: block;
+}
+
 @media screen and (min-width: 500px) {
   .headline-image.mobile {
     float: left;
+  }
+  .article :deep(.residency) {
+    display: flex;
   }
 }
 
