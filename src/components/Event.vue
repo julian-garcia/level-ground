@@ -25,11 +25,12 @@
           target="_blank"
           >Attend this event</a
         >
-        <button class="button full-width">Donate</button>
+        <button class="button full-width" @click="emitShowModal('give')">
+          Donate
+        </button>
       </template>
     </div>
     <div>
-      <p>{{ event.post_excerpt }}</p>
       <div v-html="eventHtml"></div>
     </div>
     <div class="right">
@@ -52,6 +53,14 @@ export default {
     return {
       event: {},
     };
+  },
+  methods: {
+    onShowModal(modalType) {
+      this.$emit("showModal", modalType);
+    },
+    emitShowModal(modalType) {
+      this.$emit("showModal", modalType);
+    },
   },
   created() {
     fetch(`${process.env.VUE_APP_CMS_URL}/api/event/${this.$route.params.slug}`)

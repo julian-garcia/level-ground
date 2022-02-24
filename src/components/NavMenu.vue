@@ -56,7 +56,7 @@
       target="_blank"
       rel="noopener noreferrer"
       class="social"
-      ><img src="../assets/images/instagram.png" alt=""
+      ><img src="../assets/images/instagram.svg" alt=""
     /></a>
   </ul>
   <img

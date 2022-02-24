@@ -42,7 +42,7 @@ export default {
 <style scoped>
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2rem;
   margin: 0 auto 3rem;
   justify-content: center;
@@ -66,8 +66,9 @@ export default {
 }
 
 .feature-image {
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
   background-image: url(../assets/images/event.jpg);
   height: 240px;
 }

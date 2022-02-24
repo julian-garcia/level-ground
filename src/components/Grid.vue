@@ -19,7 +19,12 @@
         </template>
         <h2>{{ item.post_title }}</h2>
         <p>{{ item.post_excerpt }}</p>
-        <p>{{ $filters.formatDate(item.post_date) }}</p>
+        <p v-if="!item.acf.event_date">
+          {{ $filters.formatDate(item.post_date) }}
+        </p>
+        <p v-if="item.acf.event_date">
+          {{ $filters.formatDate(item.acf.event_date) }}
+        </p>
       </div>
     </div>
   </div>
@@ -93,6 +98,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url(../assets/images/event.jpg);
-  height: 190px;
+  height: 290px;
 }
 </style>

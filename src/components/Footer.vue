@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <h3>Join our mailing list.</h3>
-    <p>Don’t miss out on news or events</p>
+    <p>Don't miss out on news, events and updates from Level Ground</p>
     <form
       action="https://levelground.us10.list-manage.com/subscribe/post?u=91654b7b2f2c683f33e7f44a4&amp;id=95e2975d27"
       method="post"
@@ -11,7 +11,8 @@
       novalidate
     >
       <img src="../assets/images/circles.svg" alt="" class="circles" />
-      <input type="text" name="FULLNAME" id="mce-FULLNAME" placeholder="Name" />
+      <input type="text" name="FNAME" id="mce-FNAME" placeholder="First Name" />
+      <input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" />
       <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="Email" />
       <div style="position: absolute; left: -5000px" aria-hidden="true">
         <input
@@ -30,7 +31,10 @@
       />
     </form>
 
-    <p>&copy; Level Ground {{ fullYear }}</p>
+    <p>
+      Copyright &copy; {{ fullYear }} Level Ground. All rights reserved.<br />Find
+      us at 1646 N Spring Street, Los Angeles, CA 90012
+    </p>
   </footer>
 </template>
 

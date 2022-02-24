@@ -10,13 +10,13 @@
         target="_blank"
         rel="noopener noreferrer"
         class="social"
-        ><img src="../assets/images/instagram.png" alt=""
+        ><img src="../assets/images/instagram.svg" alt=""
       /></a>
       <a href="#" @click="emitShowModal('subscribe')">Subscribe</a>
       <router-link to="/signin" v-if="!user">Sign In</router-link>
       <router-link to="/members" v-if="user">Members</router-link>
       <a href="#" class="give" @click="emitShowModal('give')"
-        ><img src="../assets/images/give.svg" alt="" /> Give</a
+        ><img src="../assets/images/give.svg" alt="" /> <span>Give</span></a
       >
     </div>
   </div>
@@ -68,11 +68,8 @@ export default {
 }
 
 .give img {
-  position: absolute;
-  width: 20px;
-  top: 3px;
-  bottom: 0px;
-  right: 35px;
+  vertical-align: bottom;
+  height: 24px;
 }
 
 .social img {
@@ -94,16 +91,13 @@ export default {
   }
   .cta a {
     display: inline-block;
-    padding: 0 15px;
+    padding: 0 0 0 30px;
     line-height: 24px;
     max-height: 24px;
     text-decoration: none;
     color: black;
   }
   .give img {
-    top: 1px;
-    right: 45px;
-    bottom: unset;
   }
   .social img {
     position: absolute;
