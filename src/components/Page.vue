@@ -103,23 +103,25 @@ export default {
         document.title = `Level Ground - ${this.page.post_title}`;
         if (this.page.acf && this.pageHtml) {
           setTimeout(() => {
-            document.querySelectorAll(".article li").forEach((item) => {
-              gsap
-                .timeline({
-                  scrollTrigger: {
-                    trigger: item,
-                    scrub: 0,
-                    start: "top bottom",
-                    end: "top 65%",
-                  },
-                })
-                .from(item, {
-                  x: -100,
-                  opacity: 0,
-                  rotateY: 90,
-                  ease: "power1.inOut",
-                });
-            });
+            document
+              .querySelectorAll(".article li:not(.blocks-gallery-item)")
+              .forEach((item) => {
+                gsap
+                  .timeline({
+                    scrollTrigger: {
+                      trigger: item,
+                      scrub: 0,
+                      start: "top bottom",
+                      end: "top 65%",
+                    },
+                  })
+                  .from(item, {
+                    x: -100,
+                    opacity: 0,
+                    rotateY: 90,
+                    ease: "power1.inOut",
+                  });
+              });
           }, 0);
         }
       })
@@ -192,7 +194,7 @@ export default {
   list-style: none;
 }
 
-.article :deep(li) {
+.article :deep(li:not(.blocks-gallery-item)) {
   padding: 15px 20px 15px 50px;
   margin: 0;
   border-left: 5px solid var(--highlight-colour-muted);
@@ -210,7 +212,7 @@ export default {
   max-width: 600px;
 }
 
-.article :deep(li:nth-child(odd)) {
+.article :deep(li:nth-child(odd):not(.blocks-gallery-item)) {
   background: linear-gradient(
     90deg,
     var(--highlight-colour-muted) 0%,
@@ -218,7 +220,7 @@ export default {
   );
 }
 
-.article :deep(li:nth-child(even)) {
+.article :deep(li:nth-child(even):not(.blocks-gallery-item)) {
   background: linear-gradient(
     90deg,
     var(--highlight-colour-light) 0%,
@@ -226,7 +228,7 @@ export default {
   );
 }
 
-.article :deep(li::before) {
+.article :deep(li::before:not(.blocks-gallery-item)) {
   font-family: Playfair;
   font-weight: bold;
   font-size: 1.5rem;
@@ -236,7 +238,7 @@ export default {
   line-height: 1;
 }
 
-.article :deep(ul > li::before) {
+.article :deep(ul > li::before:not(.blocks-gallery-item)) {
   content: "◍";
 }
 
@@ -250,6 +252,25 @@ export default {
 
 .article :deep(.has-text-align-center) {
   text-align: center;
+}
+
+:deep(.blocks-gallery-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 2rem 0;
+}
+
+:deep(.blocks-gallery-item figure) {
+  margin: 0;
+}
+
+:deep(.wp-block-gallery) {
+  margin: 0;
+}
+
+:deep(.wp-block-gallery > .wp-block-image) {
+  margin: 0;
 }
 
 .columns.columns {

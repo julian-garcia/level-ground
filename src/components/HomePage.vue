@@ -71,7 +71,10 @@
           :key="item.ID"
           @click="goTo(item.post_name)"
         >
-          <img class="card__image" :src="item.acf.featured_image" alt="" />
+          <div
+            class="card__image"
+            :style="{ backgroundImage: 'url(' + item.acf.featured_image + ')' }"
+          ></div>
           <div class="card__text">
             <h2 v-if="item.post_title">{{ item.post_title }}</h2>
             <p v-html="item.post_excerpt" v-if="item.post_excerpt"></p>
@@ -229,7 +232,7 @@ export default {
 }
 
 .featured__image {
-  height: 250px;
+  height: 370px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -309,19 +312,24 @@ export default {
   grid-template-columns: auto;
   gap: 1rem;
   cursor: pointer;
+  margin-bottom: 2rem;
 }
+
 .updates .card-side {
   cursor: pointer;
 }
 
 .updates .card__image {
-  width: 100%;
-  max-width: 300px;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .updates .card-side__image {
   background-size: cover;
   background-repeat: no-repeat;
   height: 200px;
+  width: 200px;
 }
 .updates .card__text h2 {
   margin-top: 0;
@@ -383,13 +391,16 @@ export default {
 }
 @media screen and (min-width: 900px) {
   .updates {
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 2fr 1fr;
   }
   .updates .card {
     grid-template-columns: 1fr 3fr;
   }
 }
 @media screen and (min-width: 1150px) {
+  .updates {
+    grid-template-columns: 3fr 1fr;
+  }
   .headline .title::after {
     display: block;
   }
